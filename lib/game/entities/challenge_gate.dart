@@ -5,22 +5,29 @@ import '../../app/theme/app_palette.dart';
 import '../../domain/models/challenge.dart';
 import '../config/game_config.dart';
 import '../text/arabic_text.dart';
+import '../world/perspective.dart';
+import '../world/scenery.dart';
 
-/// بوابةُ التحدّي: بناءٌ حجريٌّ واحدٌ يحمل الجملةَ على عتَبته العليا،
-/// وينفتح تحتها بابان، لكلِّ بابٍ طريقُه وإعرابُه.
+/// بوابةُ التحدّي: قوسٌ حجريٌّ يعترض الطريق، تعلوه لوحةٌ بالجملة، وينفتح
+/// تحتها بابان لكلٍّ منهما إعرابُه.
 ///
-/// جُمع النصُّ والطريقان في بناءٍ واحدٍ عن قصد: فبذلك يبقى النصُّ أمام عين
-/// اللاعب وهو يختار، ولا يحتاج إلى نافذة سؤالٍ تعلو الشاشة.
-class ChallengeGate extends PositionComponent {
-  ChallengeGate({required this.challenge, required double startX})
-      : super(
-          position: Vector2(startX, 0),
-          size: Vector2(GameConfig.challengeWidth, GameConfig.worldHeight),
-          anchor: Anchor.topLeft,
-          priority: 20,
-        );
+/// البناءُ لوحٌ مسطّحٌ قائمٌ عند بُعدٍ واحد، فيصحّ رسمُه كلِّه بتحويل قياسٍ
+/// واحدٍ عند ذلك البعد. وهذا بالضبط ما يجعل النصَّ يكبر تدريجيًّا وهو يقترب،
+/// فيُقرأ من بعيدٍ صغيرًا ثمّ يتّضح — وهي فائدةُ المنظور التي لم تكن في
+/// المشهد المسطّح.
+class ChallengeGate extends Component {
+  ChallengeGate({
+    required this.challenge,
+    required this.scene,
+    double? spawnZ,
+    super.priority,
+  }) : z = spawnZ ?? GameConfig.challengeSpawnZ;
 
   final Challenge challenge;
+  final SceneState scene;
+
+  /// بُعدُ البوابة عن الكاميرا؛ يتناقص حتى يبلغ اللاعبَ.
+  double z;
 
   late final TextPainter _sentencePainter;
   late final List<TextPainter> _labelPainters;
@@ -29,14 +36,39 @@ class ChallengeGate extends PositionComponent {
   int? _chosenLane;
   bool _chosenWasCorrect = false;
   double _glow = 0;
+  double _sinceResolved = 0;
 
-  /// موضع مستوى الأبواب في إحداثيّات العالم؛ عنده تُحسم الإجابة.
-  double get gatePlaneWorldX => position.x + GameConfig.gatePlaneX;
+  /// بعد العبور تنطفئ البوابةُ تدريجيًّا ثمّ تُزال.
+  ///
+  /// لولا ذلك لبقيت ماثلةً بحجمها الكامل خلف لافتة التصحيح — والعالمُ يكاد
+  /// يقف حينئذٍ — فتزاحم النصَّ الذي يقرؤه اللاعب.
+  static const double _fadeDelay = 0.3;
+  static const double _fadeDuration = 0.55;
+
+  // ── أبعادُ البناء بوحدات العالم، مقيسةً من نقطة الأرض في محور الطريق ──
+  static const double _doorTopY = -GameConfig.doorHeight;
+  static const double _plaqueCenterY = _doorTopY - 40;
+  static const double _plaqueWidth = 166;
+  static const double _plaqueHeight = 58;
+  static const double _bannerBottomY = -252;
+  static const double _bannerCenterY = _bannerBottomY - GameConfig.bannerHeight / 2;
+  static const double _pillarX = 246;
 
   bool get isResolved => _resolved;
 
-  /// هل جاوز البناءُ اللاعبَ وخرج من الشاشة؟
-  bool get isOffScreen => position.x > GameConfig.worldWidth + 80;
+  /// شفافيّةُ البناء بعد العبور: واحدٌ ما دام قائمًا، وصفرٌ حين ينطفئ تمامًا.
+  double get _opacity {
+    if (!_resolved) return 1;
+    final t = (_sinceResolved - _fadeDelay) / _fadeDuration;
+    return (1 - t).clamp(0.0, 1.0);
+  }
+
+  /// هل انتهى دورُ هذا البناء، إمّا بمجاوزته الكاميرا أو بانطفائه؟
+  bool get isBehindCamera =>
+      z < GameConfig.nearClipZ || (_resolved && _opacity <= 0);
+
+  /// المسافةُ الباقية حتى يبلغ اللاعبَ.
+  double get distanceToPlayer => z - GameConfig.playerZ;
 
   @override
   Future<void> onLoad() async {
@@ -45,32 +77,31 @@ class ChallengeGate extends PositionComponent {
         ? ArabicText.highlightedSentence(
             question.sentence,
             targetWordIndex: question.targetWordIndex,
-            fontSize: 25,
+            fontSize: GameConfig.bannerFontSize,
             baseColor: AppPalette.ink,
             highlightColor: const Color(0xFF9C3B1B),
-            maxWidth: GameConfig.lintelWidth - 32,
+            maxWidth: GameConfig.bannerWidth - 60,
           )
         : ArabicText.painter(
             question.sentence,
-            fontSize: 25,
+            fontSize: GameConfig.bannerFontSize,
             color: AppPalette.ink,
-            maxWidth: GameConfig.lintelWidth - 32,
+            maxWidth: GameConfig.bannerWidth - 60,
           );
 
     _labelPainters = [
       for (final option in challenge.options)
         ArabicText.painter(
           option.label,
-          fontSize: 22,
+          fontSize: GameConfig.doorSignFontSize,
           color: AppPalette.ink,
           fontWeight: FontWeight.w700,
-          maxWidth: GameConfig.doorSignWidth - 14,
+          maxWidth: _plaqueWidth - 16,
           height: 1.15,
         ),
     ];
   }
 
-  /// يسجّل أنَّ اللاعب عبَر من بابٍ بعينه، فيتغيّر مظهرُ البناء تبعًا لذلك.
   void markResolved({required int laneIndex, required bool isCorrect}) {
     _resolved = true;
     _chosenLane = laneIndex;
@@ -81,169 +112,118 @@ class ChallengeGate extends PositionComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    if (_glow > 0) _glow = (_glow - dt * 0.7).clamp(0.0, 1.0);
+    if (_glow > 0) _glow = (_glow - dt * 0.75).clamp(0.0, 1.0);
+    if (_resolved) _sinceResolved += dt;
   }
 
   @override
   void render(Canvas canvas) {
-    _renderFork(canvas);
+    if (!Perspective.isVisible(z)) return;
+
+    final opacity = _opacity;
+    if (opacity <= 0) return;
+
+    final scale = Perspective.scaleAt(z);
+    final ground = Perspective.project(0, z);
+
+    canvas.save();
+    if (opacity < 1) {
+      canvas.saveLayer(
+        null,
+        Paint()..color = Colors.white.withValues(alpha: opacity),
+      );
+    }
+    canvas.translate(ground.dx, ground.dy);
+    canvas.scale(scale);
+
     _renderPillars(canvas);
     for (var i = 0; i < challenge.laneCount; i++) {
       _renderDoor(canvas, i);
     }
-    _renderLintel(canvas);
+    for (var i = 0; i < challenge.laneCount; i++) {
+      _renderPlaque(canvas, i);
+    }
+    _renderBanner(canvas);
+    _applyHaze(canvas);
+
+    if (opacity < 1) canvas.restore();
+    canvas.restore();
   }
 
-  /// الإسفينُ الذي ينقسم عنده الطريق إلى طريقين حقيقيّين.
-  void _renderFork(Canvas canvas) {
-    const tipX = GameConfig.forkTipX;
-    const planeX = GameConfig.gatePlaneX;
-    final top = GameConfig.laneCenters.first + 30;
-    final bottom = GameConfig.laneCenters.last - 30;
-    final midY = (GameConfig.laneCenters.first + GameConfig.laneCenters.last) / 2;
-
-    final wedge = Path()
-      ..moveTo(tipX, midY)
-      ..lineTo(planeX - 40, top)
-      ..lineTo(planeX - 40, bottom)
-      ..close();
-
-    canvas.drawPath(wedge, Paint()..color = const Color(0xFF8A8A63));
-    canvas.drawPath(
-      wedge,
-      Paint()
-        ..color = AppPalette.roadEdge
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
-    );
-  }
-
-  /// أعمدةُ البناء الحاملةُ للعتَبة.
   void _renderPillars(Canvas canvas) {
     final paint = Paint()..color = AppPalette.stoneDark;
-    const pillarWidth = 18.0;
-    final top = GameConfig.lintelCenterY + GameConfig.lintelHeight / 2 - 8;
-    for (final x in [
-      GameConfig.gatePlaneX - GameConfig.lintelWidth / 2 + 14,
-      GameConfig.gatePlaneX + GameConfig.lintelWidth / 2 - 32,
-    ]) {
+    for (final x in [-_pillarX, _pillarX]) {
       canvas.drawRect(
-        Rect.fromLTWH(x, top, pillarWidth, GameConfig.roadTopY - top + 10),
+        Rect.fromLTWH(x - 15, _bannerBottomY, 30, -_bannerBottomY),
         paint,
       );
+      // قاعدةٌ أعرضُ تُثبّت العمودَ بصريًّا على الأرض.
+      canvas.drawRect(Rect.fromLTWH(x - 22, -18, 44, 18), paint);
     }
-  }
-
-  /// العتَبةُ العليا وعليها الجملة، والكلمةُ المستهدفة مميّزةٌ بلونها.
-  void _renderLintel(Canvas canvas) {
-    final rect = Rect.fromCenter(
-      center: const Offset(GameConfig.gatePlaneX, GameConfig.lintelCenterY),
-      width: GameConfig.lintelWidth,
-      height: GameConfig.lintelHeight,
-    );
-    final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(10));
-
-    canvas.drawRRect(
-      rrect.shift(const Offset(0, 5)),
-      Paint()..color = Colors.black.withValues(alpha: 0.25),
-    );
-    canvas.drawRRect(rrect, Paint()..color = AppPalette.parchment);
-    canvas.drawRRect(
-      rrect.deflate(7),
-      Paint()
-        ..color = AppPalette.woodDark.withValues(alpha: 0.55)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
-    );
-    canvas.drawRRect(
-      rrect,
-      Paint()
-        ..color = AppPalette.woodDark
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 5,
-    );
-
-    ArabicText.paintCentered(
-      canvas,
-      _sentencePainter,
-      const Offset(GameConfig.gatePlaneX, GameConfig.lintelCenterY),
-    );
   }
 
   /// بابٌ واحدٌ يحمل إعرابًا؛ الدخولُ منه هو الإجابة.
-  ///
-  /// قاعدةُ الباب موضوعةٌ على خطّ مشي المسار، فيبدو المسافرُ عابرًا من داخله
-  /// لا واقفًا فوقه.
   void _renderDoor(Canvas canvas, int laneIndex) {
-    final laneY = GameConfig.laneCenters[laneIndex];
-    final centerY = laneY + GameConfig.doorBaseOffset - GameConfig.doorHeight / 2;
-    final rect = Rect.fromCenter(
-      center: Offset(GameConfig.gatePlaneX, centerY),
-      width: GameConfig.doorWidth,
-      height: GameConfig.doorHeight,
+    final x = GameConfig.laneOffsets[laneIndex];
+    final rect = Rect.fromLTRB(
+      x - GameConfig.doorWidth / 2,
+      _doorTopY,
+      x + GameConfig.doorWidth / 2,
+      0,
     );
-    final rrect = RRect.fromRectAndCorners(
+    final arch = RRect.fromRectAndCorners(
       rect,
-      topLeft: const Radius.circular(46),
-      topRight: const Radius.circular(46),
+      topLeft: const Radius.circular(62),
+      topRight: const Radius.circular(62),
     );
-
-    var frameColor = AppPalette.stone;
-    var fillColor = AppPalette.woodDark;
-
-    if (_resolved && _chosenLane == laneIndex) {
-      frameColor = _chosenWasCorrect ? AppPalette.gold : AppPalette.failure;
-      fillColor = Color.lerp(
-        AppPalette.woodDark,
-        frameColor,
-        0.45 * _glow,
-      )!;
-    }
-
-    canvas.drawRRect(rrect, Paint()..color = fillColor);
-    // عمقُ الممرّ: ظلٌّ داخليٌّ يوحي بأنَّ الباب منفَذٌ لا لوحةٌ مسطّحة.
-    canvas.drawRRect(
-      rrect.deflate(14),
-      Paint()..color = Colors.black.withValues(alpha: 0.18),
-    );
-    canvas.drawRRect(
-      rrect,
-      Paint()
-        ..color = frameColor
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 6,
-    );
-
-    if (_glow > 0 && _chosenLane == laneIndex) {
-      canvas.drawRRect(
-        rrect.inflate(8),
-        Paint()
-          ..color = frameColor.withValues(alpha: 0.35 * _glow)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 10,
-      );
-    }
-
-    _renderDoorSign(canvas, laneIndex, rect.top);
-  }
-
-  /// لافتةٌ خشبيّةٌ فوق الباب تحمل الإعراب.
-  void _renderDoorSign(Canvas canvas, int laneIndex, double doorTop) {
-    final center = Offset(
-      GameConfig.gatePlaneX,
-      doorTop - GameConfig.doorSignGap - GameConfig.doorSignHeight / 2,
-    );
-    final rect = Rect.fromCenter(
-      center: center,
-      width: GameConfig.doorSignWidth,
-      height: GameConfig.doorSignHeight,
-    );
-    final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(6));
 
     final isChosen = _resolved && _chosenLane == laneIndex;
+    final frame = isChosen
+        ? (_chosenWasCorrect ? AppPalette.gold : AppPalette.failure)
+        : AppPalette.stone;
+
+    // إطارُ الباب.
+    canvas.drawRRect(arch, Paint()..color = frame);
+    // فتحةُ الممرّ: أغمقُ في العمق فيبدو منفَذًا لا لوحًا.
     canvas.drawRRect(
-      rrect.shift(const Offset(0, 3)),
-      Paint()..color = Colors.black.withValues(alpha: 0.22),
+      arch.deflate(13),
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color(0xFF2A1A10),
+            AppPalette.woodDark.withValues(alpha: 0.92),
+          ],
+        ).createShader(rect),
+    );
+
+    if (_glow > 0 && isChosen) {
+      canvas.drawRRect(
+        arch.inflate(14),
+        Paint()
+          ..color = frame.withValues(alpha: 0.4 * _glow)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 16,
+      );
+    }
+  }
+
+  /// لوحةُ الإعراب فوق قوس الباب، لا داخلَه، كيلا تحجبها الشخصيّةُ عند العبور.
+  void _renderPlaque(Canvas canvas, int laneIndex) {
+    final x = GameConfig.laneOffsets[laneIndex];
+    final rect = Rect.fromCenter(
+      center: Offset(x, _plaqueCenterY),
+      width: _plaqueWidth,
+      height: _plaqueHeight,
+    );
+    final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(9));
+
+    final isChosen = _resolved && _chosenLane == laneIndex;
+
+    canvas.drawRRect(
+      rrect.shift(const Offset(0, 5)),
+      Paint()..color = Colors.black.withValues(alpha: 0.24),
     );
     canvas.drawRRect(rrect, Paint()..color = AppPalette.parchment);
     canvas.drawRRect(
@@ -253,9 +233,64 @@ class ChallengeGate extends PositionComponent {
             ? (_chosenWasCorrect ? AppPalette.gold : AppPalette.failure)
             : AppPalette.woodDark
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
+        ..strokeWidth = 4,
     );
 
-    ArabicText.paintCentered(canvas, _labelPainters[laneIndex], center);
+    ArabicText.paintCentered(
+      canvas,
+      _labelPainters[laneIndex],
+      Offset(x, _plaqueCenterY),
+    );
+  }
+
+  /// اللوحةُ العليا وعليها الجملة، والكلمةُ المستهدفة مميّزةٌ بلونها.
+  void _renderBanner(Canvas canvas) {
+    final rect = Rect.fromCenter(
+      center: const Offset(0, _bannerCenterY),
+      width: GameConfig.bannerWidth,
+      height: GameConfig.bannerHeight,
+    );
+    final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(16));
+
+    canvas.drawRRect(
+      rrect.shift(const Offset(0, 9)),
+      Paint()..color = Colors.black.withValues(alpha: 0.26),
+    );
+    canvas.drawRRect(rrect, Paint()..color = AppPalette.parchment);
+    canvas.drawRRect(
+      rrect.deflate(12),
+      Paint()
+        ..color = AppPalette.woodDark.withValues(alpha: 0.5)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3,
+    );
+    canvas.drawRRect(
+      rrect,
+      Paint()
+        ..color = AppPalette.woodDark
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 9,
+    );
+
+    ArabicText.paintCentered(
+      canvas,
+      _sentencePainter,
+      const Offset(0, _bannerCenterY),
+    );
+  }
+
+  /// يذيب البناءَ في لون الأفق كلّما بعُد، فيتّسق مع بقيّة المشهد.
+  void _applyHaze(Canvas canvas) {
+    final haze = Perspective.hazeAt(z);
+    if (haze <= 0.01) return;
+    canvas.drawRect(
+      Rect.fromLTRB(
+        -_pillarX - 40,
+        _bannerCenterY - GameConfig.bannerHeight,
+        _pillarX + 40,
+        20,
+      ),
+      Paint()..color = scene.atmosphere.hazeColor.withValues(alpha: haze),
+    );
   }
 }

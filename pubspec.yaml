@@ -17,6 +17,7 @@ dependencies:
   flame: ^1.38.0
   flutter_riverpod: ^2.6.1
   path_provider: ^2.1.6
+  flame_audio: ^2.12.2
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +29,7 @@ flutter:
 
   assets:
     - assets/content/questions/
+    - assets/audio/
 
   fonts:
     - family: Amiri
@@ -38,6 +40,11 @@ flutter:
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo-Regular.ttf
+    # خطُّ الرموز التعبيريّة أحاديُّ اللون: يلائم لونَ الحبر على الورق،
+    # ويُغني عن اعتماد خطوط النظام التي تختلف بين الأجهزة.
+    - family: NotoEmoji
+      fonts:
+        - asset: assets/fonts/NotoEmoji-Regular.ttf
     # الخطُّ الاحتياطيُّ للمحرّك، مُرفَقٌ محلّيًّا كيلا يطلبَه التطبيقُ من الشبكة.
     - family: Roboto
       fonts:

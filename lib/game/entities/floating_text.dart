@@ -12,7 +12,8 @@ class FloatingText extends PositionComponent {
     this.fontSize = 26,
     this.lifetime = 1.15,
     this.rise = 62,
-  }) : super(position: origin, priority: 50);
+    super.priority = 50,
+  }) : super(position: origin);
 
   final String text;
   final Color color;

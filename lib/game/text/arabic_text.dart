@@ -12,6 +12,10 @@ class ArabicText {
   static const String fontFamily = 'Amiri';
   static const String uiFontFamily = 'Cairo';
 
+  /// خطٌّ احتياطيٌّ للرموز التعبيريّة؛ خطوطُ النصّ العربيّ لا تحمل رسومَها،
+  /// وبدونه تظهر مربّعاتٍ فارغة.
+  static const List<String> _fallback = ['NotoEmoji'];
+
   /// يبني رسّامَ نصٍّ عربيٍّ جاهزًا للقياس والرسم.
   static TextPainter painter(
     String text, {
@@ -28,6 +32,7 @@ class ArabicText {
         text: text,
         style: TextStyle(
           fontFamily: fontFamily,
+          fontFamilyFallback: _fallback,
           fontSize: fontSize,
           color: color,
           fontWeight: fontWeight,
@@ -57,6 +62,7 @@ class ArabicText {
     final words = sentence.split(RegExp(r'\s+'));
     final baseStyle = TextStyle(
       fontFamily: fontFamily,
+      fontFamilyFallback: _fallback,
       fontSize: fontSize,
       color: baseColor,
       height: height,

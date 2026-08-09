@@ -32,6 +32,13 @@ class AnswerResult {
   /// سببُ الوقوع في هذا الخطأ بعينه، إن كان مسجَّلًا.
   String? get misconception => isCorrect ? null : chosen.misconception;
 
+  /// كلمةُ المعلّم على اللافتة عند الخطأ: سؤالٌ يستنطق الفكرَ أو تعليلٌ لطيف.
+  ///
+  /// إن لم يُكتب للخيار نصٌّ خاصّ، رجعنا إلى شرح السؤال؛ فلا يُترك المتعلّم
+  /// بلا بيانٍ في حال.
+  String get nudge =>
+      chosen.nudge ?? chosen.misconception ?? question.explanation;
+
   @override
   String toString() =>
       'AnswerResult(${question.id}, ${isCorrect ? "صحيح" : "خطأ"}, +$xpAwarded)';

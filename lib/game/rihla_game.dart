@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -5,38 +7,54 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../app/theme/app_palette.dart';
+import '../domain/content/encouragement.dart';
 import '../domain/engines/session_engine.dart';
+import '../domain/engines/staged_question_selector.dart';
 import '../domain/models/answer_result.dart';
+import '../services/audio_service.dart';
 import 'config/game_config.dart';
 import 'entities/challenge_gate.dart';
-import 'entities/correction_scroll.dart';
+import 'entities/correction_sign.dart';
 import 'entities/floating_text.dart';
 import 'entities/player_character.dart';
-import 'world/backdrop.dart';
+import 'entities/torch_pickup.dart';
+import 'world/atmosphere.dart';
+import 'world/perspective.dart';
+import 'world/scenery.dart';
 
 /// أطوار الحلقة الأساسيّة.
-enum GamePhase {
-  /// سيرٌ هادئٌ بين تحدٍّ وآخر.
-  travelling,
+enum GamePhase { travelling, approaching, rewarding, correcting }
 
-  /// بناءُ التحدّي قادمٌ واللاعب يقرأ ويختار طريقَه.
-  approaching,
+/// حصيلةٌ معروضةٌ للواجهة: حالُ اللاعب وما جمعه وما بلغه من المراحل.
+@immutable
+class HudState {
+  const HudState({
+    required this.stats,
+    required this.torches,
+    required this.stage,
+    required this.atmosphereName,
+  });
 
-  /// لحظةُ المكافأة بعد إجابةٍ صحيحة.
-  rewarding,
+  final SessionStats stats;
+  final int torches;
+  final int stage;
+  final String atmosphereName;
 
-  /// المعلّم والمخطوطة بعد إجابةٍ خاطئة.
-  correcting,
+  bool get canSwitchAtmosphere => torches >= GameConfig.torchesPerAtmosphere;
 }
 
-/// اللعبة نفسُها: عالمٌ يسير، وبواباتٌ تحمل الجُمل، وطريقان يختار اللاعب أحدهما
-/// بحركته لا بضغطة زرّ.
-///
-/// كلُّ ما يخصّ صحّةَ الإجابة والمكافأة يجري في [SessionEngine]؛ ودورُ هذا
-/// الصنف أن يترجم «أين وقف اللاعب حين عبَر البوابة» إلى «أيّ مسارٍ اختار».
+/// اللعبة: طريقٌ يمتدّ إلى الأفق، واللاعب يصعده من أسفل الشاشة إلى أعلاها،
+/// فتقبل عليه بوابةٌ تحمل جملةً وبابين، فيجيب بدخوله أحدَهما.
 class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
-  RihlaGame({required this.sessionEngine})
-      : super(
+  RihlaGame({
+    required this.sessionEngine,
+    required this.selector,
+    AudioService? audio,
+    math.Random? random,
+  })  : audio = audio ?? SilentAudioService(),
+        _random = random ?? math.Random(),
+        _encouragement = Encouragement(random: random),
+        super(
           camera: CameraComponent.withFixedResolution(
             width: GameConfig.worldWidth,
             height: GameConfig.worldHeight,
@@ -45,26 +63,42 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
 
   final SessionEngine sessionEngine;
 
-  /// حصيلةُ الجلسة معروضةً للواجهة دون أن تعرف الواجهةُ شيئًا عن اللعبة.
-  final ValueNotifier<SessionStats> stats =
-      ValueNotifier(const SessionStats());
+  /// محرّكُ الاختيار المتدرّج؛ نحتفظ به لنعرض رقمَ المرحلة للاعب.
+  final StagedQuestionSelector selector;
+
+  final AudioService audio;
+  final math.Random _random;
+  final Encouragement _encouragement;
+
+  final ValueNotifier<HudState> hud = ValueNotifier(
+    const HudState(
+      stats: SessionStats(),
+      torches: 0,
+      stage: 1,
+      atmosphereName: 'غروبُ القرية',
+    ),
+  );
+
+  final SceneState scene = SceneState();
 
   late final PlayerCharacter player;
-  late final List<ScrollingLayer> _layers;
 
   GamePhase phase = GamePhase.travelling;
 
   ChallengeGate? _activeGate;
-  CorrectionScroll? _correction;
+  CorrectionSign? _correction;
+  final List<TorchPickup> _torches = [];
+
+  int torchesCollected = 0;
+  int _stage = 1;
 
   double _speed = GameConfig.cruiseSpeed;
   double _targetSpeed = GameConfig.cruiseSpeed;
-  double _distanceToNextChallenge = 320;
+  double _distanceToNextChallenge = 900;
+  double _distanceToNextTorch = 620;
 
-  // مرجعُ السحب: نحرّك الشخصية بمقدار إزاحة الإصبع لا بموضعه المطلق،
-  // كيلا تقفز الشخصيةُ إلى موضع اللمسة الأولى.
-  double _dragStartPointerY = 0;
-  double _dragStartTargetY = 0;
+  double _dragStartPointerX = 0;
+  double _dragStartTargetX = 0;
 
   @override
   Future<void> onLoad() async {
@@ -72,18 +106,15 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       ..anchor = Anchor.topLeft
       ..position = Vector2.zero();
 
-    _layers = [
-      HillsLayer(parallaxFactor: 0.18, priority: 1),
-      VillageLayer(parallaxFactor: 0.42, priority: 2),
-      RoadLayer(priority: 3),
-    ];
+    world.addAll([
+      SkyLayer(scene, priority: 0),
+      RoadLayer(scene, priority: 1),
+    ]);
 
-    world.addAll([SkyLayer(priority: 0), ..._layers]);
-
-    player = PlayerCharacter();
+    player = PlayerCharacter(priority: 40);
     world.add(player);
 
-    _publishStats();
+    _publish();
   }
 
   @override
@@ -92,35 +123,38 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
 
     _speed += (_targetSpeed - _speed) *
         (GameConfig.speedLerpRate * dt).clamp(0.0, 1.0);
-    final distance = _speed * dt;
+    final travelled = _speed * dt;
+    scene.travelled += travelled;
 
-    for (final layer in _layers) {
-      layer.scroll(distance);
-    }
-
-    _advanceGates(distance);
+    _advanceGate(travelled);
+    _advanceTorches(travelled);
     _applyLaneMagnetism(dt);
     _applyReadingSlowdown();
 
     if (phase == GamePhase.travelling || phase == GamePhase.rewarding) {
-      _distanceToNextChallenge -= distance;
+      _distanceToNextChallenge -= travelled;
       if (_distanceToNextChallenge <= 0 && _activeGate == null) {
         _spawnChallenge();
       }
     }
+
+    _distanceToNextTorch -= travelled;
+    if (_distanceToNextTorch <= 0) _spawnTorch();
   }
 
-  void _advanceGates(double distance) {
+  // ── البوابة ──
+
+  void _advanceGate(double travelled) {
     final gate = _activeGate;
     if (gate == null) return;
 
-    gate.position.x += distance;
+    gate.z -= travelled;
 
-    if (!gate.isResolved && gate.gatePlaneWorldX >= GameConfig.playerX) {
+    if (!gate.isResolved && gate.z <= GameConfig.playerZ) {
       _commitAnswer(gate);
     }
 
-    if (gate.isOffScreen) {
+    if (gate.isBehindCamera) {
       gate.removeFromParent();
       _activeGate = null;
     }
@@ -131,8 +165,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     final gate = _activeGate;
     if (gate == null || gate.isResolved) return;
 
-    // البوابةُ تأتي من اليسار، فالمسافةُ المتبقّية موجبةٌ ما لم يبلغها اللاعب بعد.
-    final remaining = GameConfig.playerX - gate.gatePlaneWorldX;
+    final remaining = gate.distanceToPlayer;
     if (remaining > GameConfig.readingDistance) return;
 
     final closeness =
@@ -141,31 +174,37 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         (GameConfig.readingSpeed - GameConfig.challengeSpeed) * closeness;
   }
 
-  /// انجذابٌ لطيفٌ نحو مركز أقرب مسارٍ عند اقتراب البوابة،
+  /// انجذابٌ لطيفٌ نحو محور أقرب مسارٍ عند اقتراب البوابة،
   /// حتى لا يُحرم اللاعبُ من إجابةٍ يعرفها بسبب دقّة إصبعه.
   void _applyLaneMagnetism(double dt) {
     final gate = _activeGate;
     if (gate == null || gate.isResolved) return;
+    if (gate.distanceToPlayer > 520) return;
 
-    final remaining = GameConfig.playerX - gate.gatePlaneWorldX;
-    if (remaining > 210) return;
-
-    final laneY = GameConfig.laneCenters[player.nearestLaneIndex];
+    final laneX = GameConfig.laneOffsets[player.nearestLaneIndex];
     final pull = (GameConfig.laneMagnetism * dt).clamp(0.0, 1.0);
-    player.targetY = player.targetY + (laneY - player.targetY) * pull;
+    player.targetX = player.targetX + (laneX - player.targetX) * pull;
   }
 
   void _spawnChallenge() {
     final challenge = sessionEngine.nextChallenge();
     final gate = ChallengeGate(
       challenge: challenge,
-      startX: -GameConfig.challengeWidth,
+      scene: scene,
+      priority: 20,
     );
     _activeGate = gate;
     world.add(gate);
 
     phase = GamePhase.approaching;
     _targetSpeed = GameConfig.challengeSpeed;
+
+    if (selector.stage != _stage) {
+      _stage = selector.stage;
+      audio.play(GameSound.stage);
+      _announce('المرحلة $_stage — ترتفع الصعوبة', AppPalette.parchment);
+    }
+    _publish();
   }
 
   void _commitAnswer(ChallengeGate gate) {
@@ -173,13 +212,13 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     final result = sessionEngine.submitLane(laneIndex);
 
     gate.markResolved(laneIndex: laneIndex, isCorrect: result.isCorrect);
-    _publishStats();
 
     if (result.isCorrect) {
       _onCorrect(result);
     } else {
       _onWrong(result);
     }
+    _publish();
   }
 
   void _onCorrect(AnswerResult result) {
@@ -188,12 +227,16 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     _distanceToNextChallenge = GameConfig.gapBetweenChallenges;
 
     player.setState(PlayerState.celebrating, duration: 0.9);
+    audio.play(GameSound.correct);
 
+    final head = player.headScreenPosition;
     world.add(
       FloatingText(
-        text: 'أحسنتَ  +${result.xpAwarded}',
-        origin: Vector2(GameConfig.playerX - 20, player.position.y - 120),
+        text: '${_encouragement.phraseFor(streak: result.streakAfter)}'
+            '   +${result.xpAwarded}',
+        origin: Vector2(head.dx, head.dy - 40),
         color: AppPalette.gold,
+        priority: 50,
       ),
     );
 
@@ -201,10 +244,11 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       world.add(
         FloatingText(
           text: 'سلسلةٌ متّصلة × ${result.streakAfter}',
-          origin: Vector2(GameConfig.playerX - 20, player.position.y - 170),
+          origin: Vector2(head.dx, head.dy - 92),
           color: AppPalette.success,
           fontSize: 19,
-          lifetime: 1.4,
+          lifetime: 1.5,
+          priority: 50,
         ),
       );
     }
@@ -214,9 +258,10 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     phase = GamePhase.correcting;
     _targetSpeed = GameConfig.correctionSpeed;
 
-    player.setState(PlayerState.stumbling, duration: 1.4);
+    player.setState(PlayerState.stumbling, duration: 1.6);
+    audio.play(GameSound.wrong);
 
-    final correction = CorrectionScroll(
+    final correction = CorrectionSign(
       result: result,
       onDismissed: _resumeAfterCorrection,
     );
@@ -231,25 +276,110 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     _distanceToNextChallenge = GameConfig.gapBetweenChallenges;
   }
 
-  void _publishStats() => stats.value = sessionEngine.stats;
+  // ── الشعلات ──
 
-  // ── التحكّم باللمس ──
+  void _spawnTorch() {
+    // لا تُلقى شعلةٌ في وجه بوابةٍ مقبلة، كيلا تشتّت اللاعبَ عن القراءة.
+    final gate = _activeGate;
+    final busy = gate != null && gate.distanceToPlayer < 1200;
+    _distanceToNextTorch = 520 + _random.nextDouble() * 620;
+    if (busy) return;
+
+    final lane = GameConfig.laneOffsets[_random.nextInt(GameConfig.laneCount)];
+    final torch = TorchPickup(
+      lateralX: lane,
+      spawnZ: GameConfig.challengeSpawnZ,
+      priority: 15,
+    );
+    _torches.add(torch);
+    world.add(torch);
+  }
+
+  void _advanceTorches(double travelled) {
+    for (final torch in List<TorchPickup>.of(_torches)) {
+      torch.z -= travelled;
+
+      if (torch.canBeCollectedBy(player.lateralX)) {
+        torch.collect();
+        torchesCollected++;
+        audio.play(GameSound.torch);
+        final head = player.headScreenPosition;
+        world.add(
+          FloatingText(
+            text: 'شعلة +١',
+            origin: Vector2(head.dx + 42, head.dy - 10),
+            color: const Color(0xFFFFC061),
+            fontSize: 20,
+            lifetime: 0.9,
+            priority: 50,
+          ),
+        );
+        _publish();
+      }
+
+      if (torch.isBehindCamera || torch.isCollected) {
+        torch.removeFromParent();
+        _torches.remove(torch);
+      }
+    }
+  }
+
+  /// يبدّل جوَّ الرحلة مقابل شعلات. يُستدعى من الواجهة.
+  bool switchAtmosphere() {
+    if (torchesCollected < GameConfig.torchesPerAtmosphere) return false;
+    torchesCollected -= GameConfig.torchesPerAtmosphere;
+    scene.atmosphere = scene.atmosphere.next;
+    audio.play(GameSound.ambience);
+    _announce(scene.atmosphere.name, AppPalette.parchment);
+    _publish();
+    return true;
+  }
+
+  void _announce(String text, Color color) {
+    world.add(
+      FloatingText(
+        text: text,
+        origin: Vector2(GameConfig.worldWidth / 2, GameConfig.horizonY + 96),
+        color: color,
+        fontSize: 24,
+        lifetime: 2.0,
+        rise: 26,
+        priority: 55,
+      ),
+    );
+  }
+
+  void _publish() {
+    hud.value = HudState(
+      stats: sessionEngine.stats,
+      torches: torchesCollected,
+      stage: selector.stage,
+      atmosphereName: scene.atmosphere.name,
+    );
+  }
+
+  // ── التحكّم باللمس: سحبٌ أفقيٌّ يوجّه المسافرَ بين الطريقين ──
 
   @override
   void onPanStart(DragStartInfo info) {
-    _dragStartPointerY = _toWorldY(info.eventPosition.widget);
-    _dragStartTargetY = player.targetY;
+    _dragStartPointerX = _toWorldX(info.eventPosition.widget);
+    _dragStartTargetX = player.targetX;
   }
 
   @override
   void onPanUpdate(DragUpdateInfo info) {
-    final pointerY = _toWorldY(info.eventPosition.widget);
-    player.targetY = _dragStartTargetY + (pointerY - _dragStartPointerY);
+    final pointerX = _toWorldX(info.eventPosition.widget);
+    player.targetX = _dragStartTargetX + (pointerX - _dragStartPointerX);
   }
 
-  double _toWorldY(Vector2 widgetPoint) => camera.globalToLocal(widgetPoint).y;
+  /// يحوّل إحداثيَّ الإصبع إلى انحرافٍ جانبيٍّ في العالم عند بُعد اللاعب.
+  double _toWorldX(Vector2 widgetPoint) {
+    final local = camera.globalToLocal(widgetPoint);
+    return (local.x - GameConfig.worldWidth / 2) /
+        Perspective.scaleAt(GameConfig.playerZ);
+  }
 
-  // ── تحكّمٌ بلوحة المفاتيح، لتيسير الاختبار على الحاسوب وللإتاحة ──
+  // ── لوحة المفاتيح: للاختبار على الحاسوب وللإتاحة ──
 
   @override
   KeyEventResult onKeyEvent(
@@ -258,15 +388,12 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   ) {
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
 
-    final lanes = GameConfig.laneCenters;
-    final current = player.nearestLaneIndex;
-
-    if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-      player.targetY = lanes[(current - 1).clamp(0, lanes.length - 1)];
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      player.targetX = GameConfig.laneOffsets.first;
       return KeyEventResult.handled;
     }
-    if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-      player.targetY = lanes[(current + 1).clamp(0, lanes.length - 1)];
+    if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      player.targetX = GameConfig.laneOffsets.last;
       return KeyEventResult.handled;
     }
     if (event.logicalKey == LogicalKeyboardKey.space) {
@@ -278,7 +405,10 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
 
   @override
   void onRemove() {
-    stats.dispose();
+    hud.dispose();
     super.onRemove();
   }
 }
+
+/// جوُّ البداية معروضٌ للواجهة قبل أن تبدأ اللعبة.
+const Atmosphere defaultAtmosphere = Atmosphere.dusk;

@@ -3,6 +3,9 @@
 /// اللعبة تُرسم داخل دقّةٍ افتراضيّةٍ ثابتة ([worldWidth] × [worldHeight])
 /// تُحجَّم إلى شاشة الجهاز، فيبقى تخطيط العالم واحدًا على كلّ الهواتف،
 /// ويصير حسابُ المواضع قابلًا للاختبار بلا جهاز.
+///
+/// المسيرُ عموديٌّ من أسفل الشاشة إلى أعلاها في طريقٍ يمتدّ إلى الأفق،
+/// والعمقُ مصنوعٌ بإسقاط منظورٍ لا برسمٍ مسطّح. تفصيلُه في [Perspective].
 class GameConfig {
   const GameConfig._();
 
@@ -10,73 +13,86 @@ class GameConfig {
   static const double worldWidth = 432;
   static const double worldHeight = 864;
 
-  // ── الأرض والسماء ──
-  static const double horizonY = 430;
-  static const double roadTopY = 468;
-  static const double roadBottomY = 838;
+  // ── الكاميرا والمنظور ──
+  /// البعدُ البؤريّ: كلّما صغر اشتدّ المنظورُ وبدا الطريقُ أعمق.
+  static const double focalLength = 300;
+
+  /// ارتفاع خطّ الأفق على الشاشة.
+  static const double horizonY = 336;
+
+  /// موضعُ نقطة الأرض عند قدمَي الكاميرا؛ تحت حافّة الشاشة عمدًا
+  /// ليمتدّ الطريقُ خارجها فيقوى الإحساس بالقرب.
+  static const double roadBaseY = 916;
+
+  /// نصفُ عرض الطريق في وحدات العالم عند البعد صفر.
+  static const double roadHalfWidth = 178;
+
+  static const double nearClipZ = -120;
+  static const double farClipZ = 3200;
+
+  /// البعدُ الذي يبدأ عنده الضبابُ في إذابة الأشياء بلون الأفق.
+  static const double hazeStartZ = 700;
+  static const double hazeMaxOpacity = 0.92;
 
   // ── المساران ──
-  /// النسخة الأولى تلتزم بمسارين، والنظام يقبل الزيادة بتعديل هذه القائمة فقط.
-  static const List<double> laneCenters = [542, 712];
-  static int get laneCount => laneCenters.length;
+  /// انحرافُ كلّ مسارٍ عن محور الطريق. الأوّلُ يمينًا موافقةً لترتيب القراءة
+  /// العربيّة، فيقرأ اللاعبُ الخيارَ الأوّل في الجهة التي تبدأ منها عينُه.
+  static const List<double> laneOffsets = [92, -92];
+  static int get laneCount => laneOffsets.length;
 
-  /// أقصى انحراف مسموح للاعب فوق أعلى مسارٍ وتحت أدناه.
-  static const double laneOvershoot = 34;
+  /// أقصى انحرافٍ مسموحٍ للاعب خارج أبعد مسار.
+  static const double laneOvershoot = 46;
 
   // ── اللاعب ──
-  /// اللاعب يقف في الثلث الأيمن؛ فالعالم يأتيه من اليسار موافقةً لاتّجاه القراءة.
-  static const double playerX = 324;
-  static const double playerHeight = 96;
-  static const double playerFollowSpeed = 12;
+  /// بُعدُ اللاعب الثابت عن الكاميرا؛ عنده تُحسم الإجابة.
+  static const double playerZ = 76;
+  static const double playerHeight = 104;
+  static const double playerFollowSpeed = 11;
 
-  /// شدّة انجذاب اللاعب إلى مركز أقرب مسارٍ أثناء التحدّي (٠ = بلا انجذاب).
-  static const double laneMagnetism = 3.2;
+  /// شدّة انجذاب اللاعب إلى محور أقرب مسارٍ أثناء التحدّي (٠ = بلا انجذاب).
+  static const double laneMagnetism = 3.0;
 
-  // ── سرعة العالم ──
-  static const double cruiseSpeed = 132;
-  static const double challengeSpeed = 105;
+  // ── سرعة السير (وحدات عالمٍ في الثانية) ──
+  static const double cruiseSpeed = 460;
+  static const double challengeSpeed = 360;
 
-  /// سرعةُ القراءة: يبطئ المسافرُ من نفسه وهو يقرأ اللوحةَ المقبلة.
-  static const double readingSpeed = 46;
+  /// سرعةُ القراءة: يتمهّل المسافرُ وهو يقرأ اللوحةَ المقبلة.
+  static const double readingSpeed = 165;
 
   /// المسافة التي يبدأ عندها التمهُّلُ للقراءة.
-  static const double readingDistance = 330;
+  static const double readingDistance = 900;
 
-  /// سرعة العالم أثناء عرض التصحيح — يكاد يتوقّف ولا يتوقّف تمامًا.
-  static const double correctionSpeed = 14;
-  static const double speedLerpRate = 2.4;
+  /// سرعةُ السير أثناء عرض التصحيح — يكاد يقف ولا يقف.
+  static const double correctionSpeed = 26;
+  static const double speedLerpRate = 2.2;
 
-  // ── بنية التحدّي (إحداثيّات محلّيّة داخل المقطع، الأكبر يُلاقيه اللاعب أوّلًا) ──
-  static const double challengeWidth = 380;
+  // ── بنية التحدّي ──
+  /// بُعدُ ظهور البوابة أوّلَ مرّة.
+  static const double challengeSpawnZ = 2600;
 
-  /// مستوى أبواب البوابة: عنده تُسجَّل الإجابة.
-  static const double gatePlaneX = 150;
+  /// المسافة الفاصلة بين تحدٍّ وآخر.
+  static const double gapBetweenChallenges = 1500;
 
-  /// رأس الإسفين الذي ينقسم عنده الطريق.
-  static const double forkTipX = 330;
+  /// اللوحةُ الحاملة للجملة: كبيرةٌ في وحدات العالم كي تُقرأ من بعيد.
+  static const double bannerWidth = 560;
+  static const double bannerHeight = 210;
+  static const double bannerBaseHeight = 210;
+  static const double bannerFontSize = 52;
 
-  static const double lintelCenterY = 288;
-  static const double lintelWidth = 300;
-  static const double lintelHeight = 144;
+  /// البابان تحت اللوحة.
+  static const double doorWidth = 150;
+  static const double doorHeight = 168;
+  static const double doorSignFontSize = 40;
 
-  static const double doorWidth = 126;
-  static const double doorHeight = 104;
+  // ── الشعلات ──
+  /// كم شعلةً يلزم لتبديل أجواء المرحلة.
+  static const int torchesPerAtmosphere = 3;
 
-  /// مقدارُ نزول قاعدة الباب تحت خطّ المشي، ليبدو المسافرُ داخلَ الباب.
-  static const double doorBaseOffset = 12;
+  /// كم تحدّيًا في المرحلة الواحدة قبل أن ترتفع الصعوبة.
+  static const int challengesPerStage = 6;
 
-  /// لافتةُ الإعراب فوق قوس الباب، حتى لا تحجبها الشخصيةُ لحظةَ العبور.
-  static const double doorSignWidth = 128;
-  static const double doorSignHeight = 34;
-  static const double doorSignGap = 14;
-
-  // ── إيقاع التوليد ──
-  /// المسافة الفاصلة بين نهاية تحدٍّ وبداية الذي يليه.
-  static const double gapBetweenChallenges = 420;
-
-  /// مدّة بقاء لوحة التصحيح قبل أن تنزوي وحدها.
-  static const double correctionDuration = 4.2;
-
-  /// أقلّ مدّةٍ تُعرض فيها لوحة التصحيح قبل قبول اللمس لتخطّيها.
-  static const double correctionMinDuration = 0.6;
+  // ── التصحيح ──
+  /// أقلُّ مدّةٍ قبل قبول لمسة المتابعة، منعًا من إغلاقٍ عرَضيّ باللمسة نفسها
+  /// التي كان اللاعب يوجّه بها شخصيّتَه.
+  static const double correctionMinDuration = 0.45;
 }

@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_palette.dart';
 import '../../data/repositories/asset_question_repository.dart';
 import '../../domain/engines/challenge_factory.dart';
-import '../../domain/engines/question_selector.dart';
 import '../../domain/engines/session_engine.dart';
+import '../../domain/engines/staged_question_selector.dart';
+import '../../services/audio_service.dart';
 import '../../game/config/game_config.dart';
 import '../../game/hud/game_hud.dart';
 import '../../game/rihla_game.dart';
@@ -25,11 +28,22 @@ class _GameScreenState extends State<GameScreen> {
     final repository = AssetQuestionRepository();
     final questions = await repository.loadLevel(1);
 
+    final audio = FlameAudioService();
+    // تحميلُ الأصوات لا يُعطّل بدءَ اللعب إن تعذّر.
+    unawaited(audio.preload());
+
+    final selector = StagedQuestionSelector(
+      questions: questions,
+      challengesPerStage: GameConfig.challengesPerStage,
+    );
+
     return RihlaGame(
       sessionEngine: SessionEngine(
-        selector: ShuffledQuestionSelector(questions: questions),
+        selector: selector,
         challengeFactory: ChallengeFactory(laneCount: GameConfig.laneCount),
       ),
+      selector: selector,
+      audio: audio,
     );
   }
 

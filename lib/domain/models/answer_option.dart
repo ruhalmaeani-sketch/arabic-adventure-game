@@ -4,6 +4,7 @@ class AnswerOption {
     required this.id,
     required this.label,
     this.misconception,
+    this.nudge,
   });
 
   /// معرّف ثابت للموضوع النحويّ الذي يمثّله هذا الخيار (مثل: fael).
@@ -16,11 +17,16 @@ class AnswerOption {
   /// يكون `null` في الخيار الصحيح.
   final String? misconception;
 
+  /// كلمةُ المعلّم حين يقع اللاعب في هذا الخطأ بعينه: سؤالٌ يستنطق فكرَه،
+  /// أو تعليلٌ لطيفٌ للصواب. تُعرض على اللافتة دون أن تُشعره بالإخفاق.
+  final String? nudge;
+
   factory AnswerOption.fromJson(Map<String, dynamic> json) {
     return AnswerOption(
       id: json['id'] as String,
       label: json['label'] as String,
       misconception: json['misconception'] as String?,
+      nudge: json['nudge'] as String?,
     );
   }
 
@@ -28,6 +34,7 @@ class AnswerOption {
         'id': id,
         'label': label,
         if (misconception != null) 'misconception': misconception,
+        if (nudge != null) 'nudge': nudge,
       };
 
   @override

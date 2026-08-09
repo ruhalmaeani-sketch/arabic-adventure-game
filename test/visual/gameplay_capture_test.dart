@@ -9,8 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flame/game.dart';
 import 'package:rihlat_alarabiyya/data/repositories/asset_question_repository.dart';
 import 'package:rihlat_alarabiyya/domain/engines/challenge_factory.dart';
-import 'package:rihlat_alarabiyya/domain/engines/question_selector.dart';
 import 'package:rihlat_alarabiyya/domain/engines/session_engine.dart';
+import 'package:rihlat_alarabiyya/domain/engines/staged_question_selector.dart';
 import 'package:rihlat_alarabiyya/domain/models/question.dart';
 import 'package:rihlat_alarabiyya/game/config/game_config.dart';
 import 'package:rihlat_alarabiyya/game/rihla_game.dart';
@@ -41,6 +41,10 @@ void main() {
       'assets/fonts/Amiri-Bold.ttf',
     ]);
     await _registerFont('Cairo', const ['assets/fonts/Cairo-Regular.ttf']);
+    await _registerFont(
+      'NotoEmoji',
+      const ['assets/fonts/NotoEmoji-Regular.ttf'],
+    );
   });
 
   Future<void> capture(WidgetTester tester, String name) async {
@@ -61,17 +65,21 @@ void main() {
       ..devicePixelRatio = 2;
     addTearDown(tester.view.reset);
 
+    final selector = StagedQuestionSelector(
+      questions: questions,
+      challengesPerStage: GameConfig.challengesPerStage,
+      random: Random(seed),
+    );
     final game = RihlaGame(
       sessionEngine: SessionEngine(
-        selector: ShuffledQuestionSelector(
-          questions: questions,
-          random: Random(seed),
-        ),
+        selector: selector,
         challengeFactory: ChallengeFactory(
           laneCount: GameConfig.laneCount,
           random: Random(seed),
         ),
       ),
+      selector: selector,
+      random: Random(seed),
     );
 
     await tester.pumpWidget(
@@ -113,13 +121,13 @@ void main() {
 
     // اختيارُ المسار الصحيح بالحركة لا بالضغط.
     final challenge = game.sessionEngine.currentChallenge!;
-    game.player.targetY = GameConfig.laneCenters[challenge.correctIndex];
+    game.player.targetX = GameConfig.laneOffsets[challenge.correctIndex];
 
     // التقدّمُ خطوةً خطوةً حتى لحظة العبور نفسِها.
     var captured = false;
     for (var i = 0; i < 260 && !captured; i++) {
       await tester.pump(const Duration(milliseconds: 16));
-      if (game.stats.value.answered == 1) {
+      if (game.hud.value.stats.answered == 1) {
         await tester.pump(const Duration(milliseconds: 160));
         await capture(tester, '04_crossing_correct');
         captured = true;
@@ -130,28 +138,38 @@ void main() {
     await advance(tester, 1.2);
     await capture(tester, '04b_reward');
 
-    expect(game.stats.value.correct, 1,
+    expect(game.hud.value.stats.correct, 1,
         reason: 'دخولُ المسار الصحيح يجب أن يُحتسب إجابةً صحيحة');
-    expect(game.stats.value.xp, greaterThan(0));
+    expect(game.hud.value.stats.xp, greaterThan(0));
   });
 
-  testWidgets('المسار الخاطئ يستدعي المعلّم والمخطوطة', (tester) async {
+  testWidgets('المسار الخاطئ يستدعي المعلّم واللافتة، ولا تنصرف إلّا بلمسة',
+      (tester) async {
     final game = await pumpGame(tester, seed: 11);
 
     await advance(tester, 6.0);
     final challenge = game.sessionEngine.currentChallenge!;
-    game.player.targetY =
-        GameConfig.laneCenters[1 - challenge.correctIndex];
+    game.player.targetX =
+        GameConfig.laneOffsets[1 - challenge.correctIndex];
 
     await advance(tester, 4.2);
     await capture(tester, '05_correction');
 
-    expect(game.stats.value.answered, 1);
-    expect(game.stats.value.correct, 0);
+    expect(game.hud.value.stats.answered, 1);
+    expect(game.hud.value.stats.correct, 0);
     expect(game.phase, GamePhase.correcting);
 
-    // المخطوطة تنطوي وحدَها فيعود اللاعب إلى طريقه.
-    await advance(tester, 5.0);
+    // اللافتةُ لا تنصرف بمرور الوقت مهما طال؛ هذا شرطُ التصميم.
+    await advance(tester, 6.0);
+    expect(
+      game.phase,
+      GamePhase.correcting,
+      reason: 'اللافتة يجب أن تنتظر لمسةَ اللاعب لا أن تنصرف وحدَها',
+    );
+
+    // لمسةٌ واحدةٌ تُنهيها وتعيد اللاعبَ إلى طريقه.
+    await tester.tapAt(const Offset(206, 440));
+    await advance(tester, 1.2);
     await capture(tester, '06_resumed');
     expect(game.phase, isNot(GamePhase.correcting));
   });

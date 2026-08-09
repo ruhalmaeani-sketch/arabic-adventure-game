@@ -60,6 +60,23 @@ void main() {
     }
   });
 
+  test('كلّ إجابة خاطئة تحمل كلمةَ المعلّم على اللافتة', () {
+    for (final question in questions) {
+      for (final wrong in question.wrongAnswers) {
+        expect(
+          wrong.nudge,
+          isNotNull,
+          reason: 'السؤال ${question.id}: الخيار ${wrong.id} بلا كلمةٍ استنطاقيّة',
+        );
+        expect(
+          wrong.nudge!.trim().length,
+          greaterThan(20),
+          reason: 'السؤال ${question.id}: كلمةُ اللافتة أقصرُ من أن تُفيد',
+        );
+      }
+    }
+  });
+
   test('كلّ إجابة خاطئة تُفسِّر سببَ الالتباس', () {
     for (final question in questions) {
       for (final wrong in question.wrongAnswers) {
