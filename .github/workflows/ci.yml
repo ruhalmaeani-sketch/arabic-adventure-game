@@ -1,0 +1,39 @@
+name: فحص المشروع
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: تحليل واختبار
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.9'
+          channel: stable
+          cache: true
+
+      - name: جلب الاعتماديات
+        run: flutter pub get
+
+      - name: تحليل الكود
+        run: flutter analyze
+
+      # الاختباراتُ تشمل حارسَ بنك الأسئلة، فخطأٌ نحويٌّ في المحتوى يُسقط البناء.
+      - name: تشغيل الاختبارات
+        run: flutter test
+
+      # لقطاتُ المعاينة البصريّة تُرفع مُنتَجًا، فيمكن الحكمُ على المشهد بالعين.
+      - name: رفع لقطات المعاينة
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gameplay-screens
+          path: build/screens/
+          if-no-files-found: ignore
