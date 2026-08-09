@@ -1,0 +1,727 @@
+{
+  "schemaVersion": 1,
+  "level": 1,
+  "title": "المستوى الأول — أساسيات الإعراب",
+  "questions": [
+    {
+      "id": "q_l1_fael_001",
+      "kind": "irab",
+      "sentence": "يَحْفَظُ الطَّالِبُ الدَّرْسَ",
+      "targetWordIndex": 1,
+      "targetWord": "الطَّالِبُ",
+      "correctAnswer": { "id": "fael", "label": "فاعل" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ أنَّ كلَّ اسمٍ بعد الفعل مفعولٌ به، ولم ينظر إلى من قام بالفعل."
+        }
+      ],
+      "grammarTopic": "fael",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الطَّالِبُ: فاعلٌ مرفوعٌ وعلامةُ رفعِه الضمَّةُ الظاهرة؛ لأنَّه الذي قام بالحِفظ.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_fael_002",
+      "kind": "irab",
+      "sentence": "كَتَبَ المُعَلِّمُ الحِكْمَةَ",
+      "targetWordIndex": 1,
+      "targetWord": "المُعَلِّمُ",
+      "correctAnswer": { "id": "fael", "label": "فاعل" },
+      "wrongAnswers": [
+        {
+          "id": "mubtada",
+          "label": "مبتدأ",
+          "misconception": "خلَط بين الفاعل والمبتدأ؛ والمبتدأُ لا يأتي بعد الفعل."
+        }
+      ],
+      "grammarTopic": "fael",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "المُعَلِّمُ: فاعلٌ مرفوعٌ بالضمَّة؛ والجملةُ فعليَّةٌ بدأت بالفعل «كَتَبَ»، فما بعده مرفوعًا فاعلٌ لا مبتدأ.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_fael_003",
+      "kind": "irab",
+      "sentence": "نَجَحَ المُجْتَهِدُ",
+      "targetWordIndex": 1,
+      "targetWord": "المُجْتَهِدُ",
+      "correctAnswer": { "id": "fael", "label": "فاعل" },
+      "wrongAnswers": [
+        {
+          "id": "mubtada",
+          "label": "مبتدأ",
+          "misconception": "رأى اسمًا مرفوعًا فظنَّه مبتدأً، ولم ينتبه إلى تقدُّم الفعل عليه."
+        }
+      ],
+      "grammarTopic": "fael",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "المُجْتَهِدُ: فاعلٌ مرفوعٌ بالضمَّة؛ لأنَّه من وقَع منه النجاح، والجملةُ فعليَّة.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_fael_004",
+      "kind": "irab",
+      "sentence": "يَنْفَعُ العِلْمُ صَاحِبَهُ",
+      "targetWordIndex": 1,
+      "targetWord": "العِلْمُ",
+      "correctAnswer": { "id": "fael", "label": "فاعل" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ أنَّ الاسمَ التالي للفعل مفعولٌ به، والفاعلُ هو من وقَع منه النفع."
+        }
+      ],
+      "grammarTopic": "fael",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "العِلْمُ: فاعلٌ مرفوعٌ بالضمَّة؛ لأنَّه الذي حصَل منه النفعُ، و«صاحبَه» هو المفعولُ به.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_fael_005",
+      "kind": "irab",
+      "sentence": "تُشْرِقُ الشَّمْسُ صَبَاحًا",
+      "targetWordIndex": 1,
+      "targetWord": "الشَّمْسُ",
+      "correctAnswer": { "id": "fael", "label": "فاعل" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "لم يُميِّز بين من وقَع منه الفعلُ ومن وقَع عليه."
+        }
+      ],
+      "grammarTopic": "fael",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "الشَّمْسُ: فاعلٌ مرفوعٌ بالضمَّة؛ لأنَّ الإشراقَ وقَع منها، والفعلُ «تُشرِقُ» لازمٌ لا مفعولَ له.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mafool_001",
+      "kind": "irab",
+      "sentence": "يَحْفَظُ الطَّالِبُ الدَّرْسَ",
+      "targetWordIndex": 2,
+      "targetWord": "الدَّرْسَ",
+      "correctAnswer": { "id": "mafool_bih", "label": "مفعول به" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "لم ينتبه إلى الفتحة، وإلى أنَّ الفاعلَ قد ذُكِر قبله."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الدَّرْسَ: مفعولٌ به منصوبٌ وعلامةُ نصبِه الفتحةُ الظاهرة؛ لأنَّه وقَع عليه فعلُ الحِفظ.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "منصوبات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mafool_002",
+      "kind": "irab",
+      "sentence": "زَرَعَ الفَلَّاحُ الشَّجَرَةَ",
+      "targetWordIndex": 2,
+      "targetWord": "الشَّجَرَةَ",
+      "correctAnswer": { "id": "mafool_bih", "label": "مفعول به" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "خلَط بين من قام بالزرع وما وقَع عليه الزرعُ."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الشَّجَرَةَ: مفعولٌ به منصوبٌ بالفتحة؛ لأنَّها التي وقَع عليها فعلُ الزَّرع، والفاعلُ «الفلَّاحُ».",
+      "xp": 10,
+      "tags": ["جملة فعلية", "منصوبات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mafool_003",
+      "kind": "irab",
+      "sentence": "فَتَحَ الخَادِمُ البَابَ",
+      "targetWordIndex": 2,
+      "targetWord": "البَابَ",
+      "correctAnswer": { "id": "mafool_bih", "label": "مفعول به" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "أعرَب آخِرَ الجملة فاعلًا، والفاعلُ هنا متقدِّمٌ عليه."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "البَابَ: مفعولٌ به منصوبٌ بالفتحة؛ لأنَّه ما وقَع عليه الفتحُ.",
+      "xp": 10,
+      "tags": ["جملة فعلية", "منصوبات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mafool_004",
+      "kind": "irab",
+      "sentence": "يُتْقِنُ الصَّانِعُ عَمَلَهُ",
+      "targetWordIndex": 2,
+      "targetWord": "عَمَلَهُ",
+      "correctAnswer": { "id": "mafool_bih", "label": "مفعول به" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "لم يلحظ أنَّ الفاعلَ «الصَّانِعُ» قد سبَقه، وأنَّ ما بعده منصوب."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "عَمَلَهُ: مفعولٌ به منصوبٌ بالفتحة، وهو مضافٌ، والهاءُ ضميرٌ متَّصلٌ مبنيٌّ في محلِّ جرٍّ مضافٌ إليه.",
+      "xp": 12,
+      "tags": ["جملة فعلية", "منصوبات", "إضافة"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mafool_005",
+      "kind": "irab",
+      "sentence": "يُكْرِمُ الكَرِيمُ ضَيْفَهُ",
+      "targetWordIndex": 2,
+      "targetWord": "ضَيْفَهُ",
+      "correctAnswer": { "id": "mafool_bih", "label": "مفعول به" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "ظنَّ أنَّ الضيفَ هو الفاعلُ، والفاعلُ من وقَع منه الإكرامُ لا من وقَع عليه."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "ضَيْفَهُ: مفعولٌ به منصوبٌ بالفتحة، وهو مضافٌ، والهاءُ في محلِّ جرٍّ مضافٌ إليه.",
+      "xp": 12,
+      "tags": ["جملة فعلية", "منصوبات", "إضافة"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mubtada_001",
+      "kind": "irab",
+      "sentence": "العِلْمُ نُورٌ",
+      "targetWordIndex": 0,
+      "targetWord": "العِلْمُ",
+      "correctAnswer": { "id": "mubtada", "label": "مبتدأ" },
+      "wrongAnswers": [
+        {
+          "id": "khabar",
+          "label": "خبر",
+          "misconception": "عكَس موضعَ المبتدأ والخبر؛ فالمبتدأُ هو المُخبَرُ عنه لا المُخبَرُ به."
+        }
+      ],
+      "grammarTopic": "mubtada",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "العِلْمُ: مبتدأٌ مرفوعٌ وعلامةُ رفعِه الضمَّةُ؛ لأنَّه اسمٌ بدَأت به الجملةُ وأُخبِر عنه بـ«نُورٌ».",
+      "xp": 10,
+      "tags": ["جملة اسمية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mubtada_002",
+      "kind": "irab",
+      "sentence": "الصِّدْقُ نَجَاةٌ",
+      "targetWordIndex": 0,
+      "targetWord": "الصِّدْقُ",
+      "correctAnswer": { "id": "mubtada", "label": "مبتدأ" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "أعرَب الاسمَ المرفوعَ فاعلًا، والفاعلُ لا يكون إلَّا بعد فعلٍ."
+        }
+      ],
+      "grammarTopic": "mubtada",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "الصِّدْقُ: مبتدأٌ مرفوعٌ بالضمَّة؛ والجملةُ اسميَّةٌ لا فعلَ فيها، فلا يصحُّ أن يكون فاعلًا.",
+      "xp": 10,
+      "tags": ["جملة اسمية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mubtada_003",
+      "kind": "irab",
+      "sentence": "الكِتَابُ صَدِيقٌ وَفِيٌّ",
+      "targetWordIndex": 0,
+      "targetWord": "الكِتَابُ",
+      "correctAnswer": { "id": "mubtada", "label": "مبتدأ" },
+      "wrongAnswers": [
+        {
+          "id": "khabar",
+          "label": "خبر",
+          "misconception": "لم يُفرِّق بين المُخبَرِ عنه والمُخبَرِ به."
+        }
+      ],
+      "grammarTopic": "mubtada",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الكِتَابُ: مبتدأٌ مرفوعٌ بالضمَّة، وخبرُه «صَدِيقٌ»، و«وَفِيٌّ» نعتٌ للخبر.",
+      "xp": 10,
+      "tags": ["جملة اسمية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_mubtada_004",
+      "kind": "irab",
+      "sentence": "الأَخْلَاقُ زِينَةُ الإِنْسَانِ",
+      "targetWordIndex": 0,
+      "targetWord": "الأَخْلَاقُ",
+      "correctAnswer": { "id": "mubtada", "label": "مبتدأ" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "ظنَّ كلَّ مرفوعٍ فاعلًا، والفاعلُ يستلزم فعلًا قبله."
+        }
+      ],
+      "grammarTopic": "mubtada",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "الأَخْلَاقُ: مبتدأٌ مرفوعٌ بالضمَّة، وخبرُه «زِينَةُ» وهو مضافٌ، و«الإِنْسَانِ» مضافٌ إليه مجرور.",
+      "xp": 12,
+      "tags": ["جملة اسمية", "مرفوعات", "إضافة"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_khabar_001",
+      "kind": "irab",
+      "sentence": "العِلْمُ نُورٌ",
+      "targetWordIndex": 1,
+      "targetWord": "نُورٌ",
+      "correctAnswer": { "id": "khabar", "label": "خبر" },
+      "wrongAnswers": [
+        {
+          "id": "mubtada",
+          "label": "مبتدأ",
+          "misconception": "المبتدأُ هو الاسمُ الأوَّلُ المُخبَرُ عنه، وهذا هو المُخبَرُ به."
+        }
+      ],
+      "grammarTopic": "khabar",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "نُورٌ: خبرٌ مرفوعٌ وعلامةُ رفعِه الضمَّةُ؛ لأنَّه أتمَّ معنى المبتدأ «العِلْمُ».",
+      "xp": 10,
+      "tags": ["جملة اسمية", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_khabar_002",
+      "kind": "irab",
+      "sentence": "الصَّبْرُ جَمِيلٌ",
+      "targetWordIndex": 1,
+      "targetWord": "جَمِيلٌ",
+      "correctAnswer": { "id": "khabar", "label": "خبر" },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "ظنَّ الوصفَ نعتًا، والنعتُ تابعٌ لا يُتِمُّ الجملةَ، والخبرُ يُتِمُّها."
+        }
+      ],
+      "grammarTopic": "khabar",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "جَمِيلٌ: خبرٌ مرفوعٌ بالضمَّة؛ ولو كان نعتًا لبقيت الجملةُ ناقصةَ المعنى، ولَما صحَّ السكوتُ عليها.",
+      "xp": 14,
+      "tags": ["جملة اسمية", "مرفوعات", "تمييز الخبر من النعت"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_khabar_003",
+      "kind": "irab",
+      "sentence": "الحَدِيقَةُ وَاسِعَةٌ",
+      "targetWordIndex": 1,
+      "targetWord": "وَاسِعَةٌ",
+      "correctAnswer": { "id": "khabar", "label": "خبر" },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ يتبع منعوتَه داخل الجملة، وهذا مُسنَدٌ إلى المبتدأ فهو خبر."
+        }
+      ],
+      "grammarTopic": "khabar",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "وَاسِعَةٌ: خبرٌ مرفوعٌ بالضمَّة؛ أُسنِد إلى المبتدأ «الحَدِيقَةُ» فتمَّ به معنى الجملة.",
+      "xp": 14,
+      "tags": ["جملة اسمية", "مرفوعات", "تمييز الخبر من النعت"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_khabar_004",
+      "kind": "irab",
+      "sentence": "الطُّلَّابُ مُجْتَهِدُونَ",
+      "targetWordIndex": 1,
+      "targetWord": "مُجْتَهِدُونَ",
+      "correctAnswer": { "id": "khabar", "label": "خبر" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "لا فعلَ في الجملة، فلا فاعلَ فيها."
+        }
+      ],
+      "grammarTopic": "khabar",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "مُجْتَهِدُونَ: خبرٌ مرفوعٌ وعلامةُ رفعِه الواوُ؛ لأنَّه جمعُ مذكَّرٍ سالم.",
+      "xp": 12,
+      "tags": ["جملة اسمية", "مرفوعات", "جمع مذكر سالم"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_naat_001",
+      "kind": "irab",
+      "sentence": "قَرَأْتُ كِتَابًا نَافِعًا",
+      "targetWordIndex": 2,
+      "targetWord": "نَافِعًا",
+      "correctAnswer": { "id": "naat", "label": "نعت" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "رأى الفتحةَ فظنَّه مفعولًا به، والمفعولُ به هو «كِتَابًا»، وهذا وصفٌ له."
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "نَافِعًا: نعتٌ منصوبٌ بالفتحة؛ تبِع منعوتَه «كِتَابًا» في النصب والتنكير، ووصَفه.",
+      "xp": 14,
+      "tags": ["توابع", "منصوبات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_naat_002",
+      "kind": "irab",
+      "sentence": "جَاءَ الطَّالِبُ المُجْتَهِدُ",
+      "targetWordIndex": 2,
+      "targetWord": "المُجْتَهِدُ",
+      "correctAnswer": { "id": "naat", "label": "نعت" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ واحدٌ وهو «الطَّالِبُ»، وهذا تابعٌ له وصَفه."
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "المُجْتَهِدُ: نعتٌ مرفوعٌ بالضمَّة؛ تبِع الفاعلَ «الطَّالِبُ» في الرفع والتعريف، ووصَفه.",
+      "xp": 14,
+      "tags": ["توابع", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_naat_003",
+      "kind": "irab",
+      "sentence": "هٰذَا رَجُلٌ كَرِيمٌ",
+      "targetWordIndex": 2,
+      "targetWord": "كَرِيمٌ",
+      "correctAnswer": { "id": "naat", "label": "نعت" },
+      "wrongAnswers": [
+        {
+          "id": "khabar",
+          "label": "خبر",
+          "misconception": "الخبرُ هو «رَجُلٌ» وقد تمَّ به المعنى، وهذا وصفٌ تابعٌ له."
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 1,
+      "difficulty": 4,
+      "explanation": "كَرِيمٌ: نعتٌ مرفوعٌ بالضمَّة؛ تبِع «رَجُلٌ» وهو الخبرُ، فوصَفه وتبِعه في الرفع والتنكير.",
+      "xp": 16,
+      "tags": ["توابع", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_jar_001",
+      "kind": "irab",
+      "sentence": "ذَهَبَ الطَّالِبُ إِلَى المَدْرَسَةِ",
+      "targetWordIndex": 3,
+      "targetWord": "المَدْرَسَةِ",
+      "correctAnswer": { "id": "ism_majroor", "label": "اسم مجرور" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "لم ينتبه إلى حرف الجرِّ «إِلَى» الذي سبَقه، فالمجرورُ لا يكون مفعولًا به."
+        }
+      ],
+      "grammarTopic": "jar_majroor",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "المَدْرَسَةِ: اسمٌ مجرورٌ بـ«إِلَى» وعلامةُ جرِّه الكسرةُ الظاهرة، والجارُّ والمجرورُ متعلِّقان بالفعل «ذَهَبَ».",
+      "xp": 12,
+      "tags": ["مجرورات", "جار ومجرور"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_jar_002",
+      "kind": "irab",
+      "sentence": "كَتَبْتُ بِالقَلَمِ",
+      "targetWordIndex": 1,
+      "targetWord": "بِالقَلَمِ",
+      "correctAnswer": { "id": "ism_majroor", "label": "اسم مجرور" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ ما بعد الفعل مفعولًا به وإن دخَل عليه حرفُ جرٍّ."
+        }
+      ],
+      "grammarTopic": "jar_majroor",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "القَلَمِ: اسمٌ مجرورٌ بالباء وعلامةُ جرِّه الكسرةُ؛ والباءُ حرفُ جرٍّ يفيد الاستعانةَ هنا.",
+      "xp": 12,
+      "tags": ["مجرورات", "جار ومجرور"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_jar_003",
+      "kind": "irab",
+      "sentence": "الكِتَابُ عَلَى الطَّاوِلَةِ",
+      "targetWordIndex": 2,
+      "targetWord": "الطَّاوِلَةِ",
+      "correctAnswer": { "id": "ism_majroor", "label": "اسم مجرور" },
+      "wrongAnswers": [
+        {
+          "id": "khabar",
+          "label": "خبر مرفوع",
+          "misconception": "الخبرُ هنا شِبهُ الجملةِ «عَلَى الطَّاوِلَةِ»، أمَّا الاسمُ نفسُه فمجرورٌ لا مرفوع."
+        }
+      ],
+      "grammarTopic": "jar_majroor",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "الطَّاوِلَةِ: اسمٌ مجرورٌ بـ«عَلَى» وعلامةُ جرِّه الكسرةُ، وشِبهُ الجملةِ «عَلَى الطَّاوِلَةِ» في محلِّ رفعٍ خبرٌ للمبتدأ.",
+      "xp": 14,
+      "tags": ["مجرورات", "جار ومجرور", "شبه الجملة"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_dharf_001",
+      "kind": "irab",
+      "sentence": "سَافَرَ الرَّجُلُ صَبَاحًا",
+      "targetWordIndex": 2,
+      "targetWord": "صَبَاحًا",
+      "correctAnswer": { "id": "dharf", "label": "ظرف زمان" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "رأى الفتحةَ فظنَّه مفعولًا به، وهو يدلُّ على زمن الفعل لا على من وقَع عليه."
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "صَبَاحًا: ظرفُ زمانٍ منصوبٌ بالفتحة؛ لأنَّه بيَّن زمنَ وقوعِ السفر، والفعلُ «سَافَرَ» لازمٌ لا مفعولَ له.",
+      "xp": 14,
+      "tags": ["منصوبات", "ظرف"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_dharf_002",
+      "kind": "irab",
+      "sentence": "جَلَسَ التِّلْمِيذُ أَمَامَ المُعَلِّمِ",
+      "targetWordIndex": 2,
+      "targetWord": "أَمَامَ",
+      "correctAnswer": { "id": "dharf", "label": "ظرف مكان" },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "لم يلحظ أنَّ الكلمةَ تدلُّ على مكانِ الجلوس، وأنَّ الفعلَ لازمٌ."
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "أَمَامَ: ظرفُ مكانٍ منصوبٌ بالفتحة، وهو مضافٌ، و«المُعَلِّمِ» مضافٌ إليه مجرورٌ بالكسرة.",
+      "xp": 14,
+      "tags": ["منصوبات", "ظرف", "إضافة"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_atf_001",
+      "kind": "irab",
+      "sentence": "حَضَرَ خَالِدٌ وَسَعِيدٌ",
+      "targetWordIndex": 2,
+      "targetWord": "وَسَعِيدٌ",
+      "correctAnswer": { "id": "matoof", "label": "معطوف" },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ هو «خَالِدٌ»، وهذا تبِعه بحرف العطف فأخَذ حُكمَه في الرفع."
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "سَعِيدٌ: معطوفٌ على الفاعل «خَالِدٌ» مرفوعٌ بالضمَّة، والواوُ حرفُ عطفٍ.",
+      "xp": 14,
+      "tags": ["توابع", "عطف", "مرفوعات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_atf_002",
+      "kind": "irab",
+      "sentence": "اشْتَرَيْتُ القَلَمَ وَالدَّفْتَرَ",
+      "targetWordIndex": 2,
+      "targetWord": "وَالدَّفْتَرَ",
+      "correctAnswer": { "id": "matoof", "label": "معطوف" },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ وصفٌ للمنعوت، وهذا اسمٌ مستقلٌّ رُبِط بالأوَّل بحرف العطف."
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "الدَّفْتَرَ: معطوفٌ على المفعول به «القَلَمَ» منصوبٌ بالفتحة، والواوُ حرفُ عطفٍ.",
+      "xp": 14,
+      "tags": ["توابع", "عطف", "منصوبات"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_jumla_001",
+      "kind": "sentence_type",
+      "sentence": "الصَّبْرُ مِفْتَاحُ الفَرَجِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": { "id": "jumla_ismiyya", "label": "جملة اسمية" },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليَّةُ تبدأ بفعلٍ، وهذه بدَأت باسمٍ."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميَّةٌ؛ لأنَّها بدَأت باسمٍ «الصَّبْرُ» وهو المبتدأ، وخبرُها «مِفْتَاحُ» وهو مضاف.",
+      "xp": 10,
+      "tags": ["أنواع الجمل"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_jumla_002",
+      "kind": "sentence_type",
+      "sentence": "يَقْرَأُ الطِّفْلُ قِصَّةً",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": { "id": "jumla_filiyya", "label": "جملة فعلية" },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميَّةُ تبدأ باسمٍ، وهذه بدَأت بفعلٍ مضارعٍ."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليَّةٌ؛ لأنَّها بدَأت بالفعل «يَقْرَأُ»، وفاعلُها «الطِّفْلُ»، ومفعولُها «قِصَّةً».",
+      "xp": 10,
+      "tags": ["أنواع الجمل"],
+      "sourceType": "original",
+      "presentationHints": ["wooden_board", "stone_gate"],
+      "reviewStatus": "approved"
+    }
+  ]
+}
