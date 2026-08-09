@@ -38,3 +38,7 @@ flutter:
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo-Regular.ttf
+    # الخطُّ الاحتياطيُّ للمحرّك، مُرفَقٌ محلّيًّا كيلا يطلبَه التطبيقُ من الشبكة.
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
