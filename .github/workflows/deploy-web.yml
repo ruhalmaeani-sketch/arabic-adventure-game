@@ -1,25 +1,28 @@
 name: نشر نسخة الويب
 
 # ينشر نسخةً قابلةً للّعب على GitHub Pages، تُفتح من متصفّح الهاتف مباشرةً.
-# يتطلّب تفعيل Pages في إعدادات المستودع، ومصدرُه: GitHub Actions.
+#
+# النشرُ يتمّ بدفع الموقع المبنيّ إلى فرع gh-pages، لا عبر بيئة النشر
+# «github-pages». والسببُ أنّ تلك البيئة تُنشأ بقاعدة حمايةٍ تقصر النشرَ على
+# فرعٍ بعينه، فتَرفض المهمّةَ قبل تنفيذ أيّ خطوةٍ منها. وهذا الطريقُ لا يعتمد
+# على تلك القاعدة، فيعمل مهما كانت إعداداتُها.
+#
+# يتطلّب ضبطَ مصدر Pages مرّةً واحدة: Deploy from a branch ← gh-pages ← / (root)
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# نشرةٌ واحدةٌ في كلّ مرّة، والأحدثُ يلغي ما قبله.
 concurrency:
-  group: pages
+  group: deploy-web
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: بناء نسخة الويب
+  deploy:
+    name: بناء ونشر
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,17 +43,17 @@ jobs:
       - name: بناء الويب
         run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: build/web
-
-  deploy:
-    name: نشر
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: دفع الموقع إلى فرع gh-pages
+        working-directory: build/web
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # يمنع Jekyll من ابتلاع الملفّات التي تبدأ بشرطةٍ سفليّة.
+          touch .nojekyll
+          git init -q
+          git checkout -qb gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "نشر نسخة الويب من ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
