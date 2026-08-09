@@ -1,0 +1,56 @@
+name: نشر نسخة الويب
+
+# ينشر نسخةً قابلةً للّعب على GitHub Pages، تُفتح من متصفّح الهاتف مباشرةً.
+# يتطلّب تفعيل Pages في إعدادات المستودع، ومصدرُه: GitHub Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# نشرةٌ واحدةٌ في كلّ مرّة، والأحدثُ يلغي ما قبله.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: بناء نسخة الويب
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.9'
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # لا يُنشر بناءٌ لم يمرّ بالتحليل والاختبارات.
+      - run: flutter analyze
+      - run: flutter test
+
+      # الموقعُ يُخدَم من مسارٍ فرعيٍّ باسم المستودع، فيلزم ضبطُ base href.
+      - name: بناء الويب
+        run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    name: نشر
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
