@@ -109,6 +109,14 @@ class ChallengeGate extends Component {
     _glow = 1;
   }
 
+  /// جاوزها المنطلقُ دون إجابة: تنطفئ كما تنطفئ المُجابةُ، بلا وسمِ صوابٍ
+  /// ولا خطأ، فلا يبقى في ذهن اللاعب أثرُ حكمٍ لم يقع.
+  void markSkipped() {
+    _resolved = true;
+    _chosenLane = null;
+    _glow = 0;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -290,7 +298,7 @@ class ChallengeGate extends Component {
         _pillarX + 40,
         20,
       ),
-      Paint()..color = scene.atmosphere.hazeColor.withValues(alpha: haze),
+      Paint()..color = scene.realm.hazeColor.withValues(alpha: haze),
     );
   }
 }

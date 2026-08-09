@@ -12,8 +12,10 @@ import 'package:rihlat_alarabiyya/domain/engines/challenge_factory.dart';
 import 'package:rihlat_alarabiyya/domain/engines/session_engine.dart';
 import 'package:rihlat_alarabiyya/domain/engines/staged_question_selector.dart';
 import 'package:rihlat_alarabiyya/domain/models/question.dart';
+import 'package:rihlat_alarabiyya/domain/models/outfit.dart';
 import 'package:rihlat_alarabiyya/game/config/game_config.dart';
 import 'package:rihlat_alarabiyya/game/rihla_game.dart';
+import 'package:rihlat_alarabiyya/game/world/realm.dart';
 
 /// مِشْحَنَةُ تحقّقٍ بصريّ: تشغّل اللعبة داخل محرّك Flutter وتلتقط إطاراتٍ حقيقيّة
 /// إلى `build/screens/`، فيمكن الحكمُ على المشهد بالعين لا بالظنّ.
@@ -174,6 +176,55 @@ void main() {
     expect(game.phase, isNot(GamePhase.correcting));
   });
 
+
+  testWidgets('لكلّ إقليمٍ هيئتُه، ولكلّ زيٍّ صورتُه', (tester) async {
+    final game = await pumpGame(tester, seed: 5);
+    await advance(tester, 1.0);
+
+    for (var i = 0; i < Realm.all.length; i++) {
+      game.scene.realm = Realm.all[i];
+      game.player.outfit = Outfit.all[i % Outfit.all.length];
+      await advance(tester, 0.6);
+      await capture(tester, 'realm_${i}_${Realm.all[i].id}');
+    }
+
+    expect(game.scene.realm.id, Realm.all.last.id);
+  });
+
+  testWidgets('الانطلاقُ يتجاوز البوابةَ فلا تُحسب له ولا عليه',
+      (tester) async {
+    final game = await pumpGame(tester, seed: 13);
+
+    // إصابتان متّصلتان تفتحان الانطلاق.
+    for (var i = 0; i < 2; i++) {
+      var answered = false;
+      for (var f = 0; f < 900 && !answered; f++) {
+        await tester.pump(const Duration(milliseconds: 16));
+        final challenge = game.sessionEngine.currentChallenge;
+        if (challenge != null) {
+          game.player.targetX = GameConfig.laneOffsets[challenge.correctIndex];
+        }
+        answered = game.hud.value.stats.correct == i + 1;
+      }
+      expect(answered, isTrue, reason: 'لم تُسجَّل الإصابة رقم ${i + 1}');
+    }
+
+    expect(game.isTurboReady, isTrue);
+    expect(game.startTurbo(), isTrue);
+
+    final before = game.hud.value.stats;
+    await advance(tester, 0.8);
+    await capture(tester, '07_turbo');
+
+    // أثناء الانطلاق تمرّ البواباتُ دون أن تُحسب.
+    await advance(tester, GameConfig.turboDuration - 1.0);
+    final after = game.hud.value.stats;
+
+    expect(after.answered, before.answered,
+        reason: 'البوّابةُ المتجاوَزة لا تُحتسب إجابة');
+    expect(after.currentStreak, before.currentStreak,
+        reason: 'التجاوزُ لا يكسر السلسلة');
+  });
 }
 
 /// يسجّل خطًّا من ملفّات المشروع في محرّك الاختبار.

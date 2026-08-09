@@ -84,9 +84,22 @@ class GameConfig {
   static const double doorHeight = 168;
   static const double doorSignFontSize = 40;
 
-  // ── الشعلات ──
-  /// كم شعلةً يلزم لتبديل أجواء المرحلة.
-  static const int torchesPerAtmosphere = 3;
+  // ── الشعلات والكتب ──
+  /// كم شعلةً يلزم للانتقال إلى إقليمٍ جديد.
+  static const int torchesPerRealm = 3;
+
+  /// المسافةُ بين ظهور مجموعةٍ ومجموعة.
+  static const double pickupSpacing = 620;
+
+  // ── الانطلاق (التيربو) ──
+  /// أقلُّ سلسلةِ إجاباتٍ صحيحةٍ تفتح الانطلاق.
+  static const int turboStreakRequirement = 2;
+
+  /// كم يدوم الانطلاق بالثواني.
+  static const double turboDuration = 6.5;
+
+  /// مضاعِفُ السرعة أثناء الانطلاق.
+  static const double turboSpeedFactor = 2.6;
 
   /// كم تحدّيًا في المرحلة الواحدة قبل أن ترتفع الصعوبة.
   static const int challengesPerStage = 6;

@@ -11,15 +11,17 @@ import '../domain/content/encouragement.dart';
 import '../domain/engines/session_engine.dart';
 import '../domain/engines/staged_question_selector.dart';
 import '../domain/models/answer_result.dart';
+import '../domain/models/outfit.dart';
 import '../services/audio_service.dart';
 import 'config/game_config.dart';
+import 'entities/book_pickup.dart';
 import 'entities/challenge_gate.dart';
 import 'entities/correction_sign.dart';
 import 'entities/floating_text.dart';
 import 'entities/player_character.dart';
 import 'entities/torch_pickup.dart';
-import 'world/atmosphere.dart';
 import 'world/perspective.dart';
+import 'world/realm.dart';
 import 'world/scenery.dart';
 
 /// أطوار الحلقة الأساسيّة.
@@ -31,16 +33,29 @@ class HudState {
   const HudState({
     required this.stats,
     required this.torches,
+    required this.books,
     required this.stage,
-    required this.atmosphereName,
+    required this.realmName,
+    required this.outfit,
+    required this.booksToNextOutfit,
+    required this.turboReady,
+    required this.turboRemaining,
   });
 
   final SessionStats stats;
   final int torches;
+  final int books;
   final int stage;
-  final String atmosphereName;
+  final String realmName;
+  final Outfit outfit;
+  final int booksToNextOutfit;
+  final bool turboReady;
 
-  bool get canSwitchAtmosphere => torches >= GameConfig.torchesPerAtmosphere;
+  /// ما بقي من زمن الانطلاق بالثواني؛ صفرٌ إن لم يكن منطلقًا.
+  final double turboRemaining;
+
+  bool get canSwitchRealm => torches >= GameConfig.torchesPerRealm;
+  bool get isTurboActive => turboRemaining > 0;
 }
 
 /// اللعبة: طريقٌ يمتدّ إلى الأفق، واللاعب يصعده من أسفل الشاشة إلى أعلاها،
@@ -71,11 +86,16 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   final Encouragement _encouragement;
 
   final ValueNotifier<HudState> hud = ValueNotifier(
-    const HudState(
-      stats: SessionStats(),
+    HudState(
+      stats: const SessionStats(),
       torches: 0,
+      books: 0,
       stage: 1,
-      atmosphereName: 'غروبُ القرية',
+      realmName: Realm.palmVillage.name,
+      outfit: Outfit.student,
+      booksToNextOutfit: Outfit.booksToNext(0),
+      turboReady: false,
+      turboRemaining: 0,
     ),
   );
 
@@ -88,14 +108,19 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   ChallengeGate? _activeGate;
   CorrectionSign? _correction;
   final List<TorchPickup> _torches = [];
+  final List<BookPickup> _books = [];
 
   int torchesCollected = 0;
+  int booksCollected = 0;
   int _stage = 1;
+
+  /// ما بقي من زمن الانطلاق؛ صفرٌ إن كان المسافرُ على سيره المعتاد.
+  double _turboRemaining = 0;
 
   double _speed = GameConfig.cruiseSpeed;
   double _targetSpeed = GameConfig.cruiseSpeed;
   double _distanceToNextChallenge = 900;
-  double _distanceToNextTorch = 620;
+  double _distanceToNextPickup = 620;
 
   double _dragStartPointerX = 0;
   double _dragStartTargetX = 0;
@@ -121,13 +146,15 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   void update(double dt) {
     super.update(dt);
 
+    _updateTurbo(dt);
+
     _speed += (_targetSpeed - _speed) *
         (GameConfig.speedLerpRate * dt).clamp(0.0, 1.0);
     final travelled = _speed * dt;
     scene.travelled += travelled;
 
     _advanceGate(travelled);
-    _advanceTorches(travelled);
+    _advancePickups(travelled);
     _applyLaneMagnetism(dt);
     _applyReadingSlowdown();
 
@@ -138,8 +165,48 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       }
     }
 
-    _distanceToNextTorch -= travelled;
-    if (_distanceToNextTorch <= 0) _spawnTorch();
+    _distanceToNextPickup -= travelled;
+    if (_distanceToNextPickup <= 0) _spawnPickup();
+  }
+
+  // ── الانطلاق ──
+
+  bool get isTurboActive => _turboRemaining > 0;
+
+  /// هل استحقّ اللاعبُ الانطلاقَ بسلسلة إصاباته؟
+  bool get isTurboReady =>
+      !isTurboActive &&
+      sessionEngine.stats.currentStreak >= GameConfig.turboStreakRequirement &&
+      phase != GamePhase.correcting;
+
+  /// ينطلق المسافرُ فيطوي الطريقَ ويتجاوز البوابات دون أن تُحسب له ولا عليه.
+  bool startTurbo() {
+    if (!isTurboReady) return false;
+    _turboRemaining = GameConfig.turboDuration;
+    audio.play(GameSound.stage);
+    _announce('انطلاق!', AppPalette.gold);
+    _publish();
+    return true;
+  }
+
+  void _updateTurbo(double dt) {
+    if (_turboRemaining <= 0) {
+      scene.turbo += (0 - scene.turbo) * (4 * dt).clamp(0.0, 1.0);
+      player.turbo = scene.turbo;
+      return;
+    }
+
+    _turboRemaining -= dt;
+    if (_turboRemaining <= 0) {
+      _turboRemaining = 0;
+      _targetSpeed = GameConfig.cruiseSpeed;
+      _publish();
+    } else {
+      _targetSpeed = GameConfig.cruiseSpeed * GameConfig.turboSpeedFactor;
+    }
+
+    scene.turbo += (1 - scene.turbo) * (5 * dt).clamp(0.0, 1.0);
+    player.turbo = scene.turbo;
   }
 
   // ── البوابة ──
@@ -151,7 +218,11 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     gate.z -= travelled;
 
     if (!gate.isResolved && gate.z <= GameConfig.playerZ) {
-      _commitAnswer(gate);
+      if (isTurboActive) {
+        _skipGate(gate);
+      } else {
+        _commitAnswer(gate);
+      }
     }
 
     if (gate.isBehindCamera) {
@@ -160,8 +231,31 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     }
   }
 
+  /// يمرّ المنطلقُ بالبوابة دون أن يُجيب، فلا تُحسب له ولا عليه.
+  void _skipGate(ChallengeGate gate) {
+    sessionEngine.skipCurrent();
+    gate.markSkipped();
+    phase = GamePhase.travelling;
+    _distanceToNextChallenge = GameConfig.gapBetweenChallenges * 0.5;
+
+    final head = player.headScreenPosition;
+    world.add(
+      FloatingText(
+        text: 'تجاوزتَها',
+        origin: Vector2(head.dx, head.dy - 44),
+        color: AppPalette.parchment,
+        fontSize: 20,
+        lifetime: 0.9,
+        priority: 50,
+      ),
+    );
+  }
+
   /// يتمهّل المسافرُ كلّما دنا من اللوحة، فيتّسع وقتُ القراءة دون أن يقف العالم.
+  ///
+  /// ولا تمهُّلَ أثناء الانطلاق؛ فالمنطلقُ لا يقرأ.
   void _applyReadingSlowdown() {
+    if (isTurboActive) return;
     final gate = _activeGate;
     if (gate == null || gate.isResolved) return;
 
@@ -177,6 +271,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   /// انجذابٌ لطيفٌ نحو محور أقرب مسارٍ عند اقتراب البوابة،
   /// حتى لا يُحرم اللاعبُ من إجابةٍ يعرفها بسبب دقّة إصبعه.
   void _applyLaneMagnetism(double dt) {
+    if (isTurboActive) return;
     final gate = _activeGate;
     if (gate == null || gate.isResolved) return;
     if (gate.distanceToPlayer > 520) return;
@@ -256,6 +351,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
 
   void _onWrong(AnswerResult result) {
     phase = GamePhase.correcting;
+    _turboRemaining = 0;
     _targetSpeed = GameConfig.correctionSpeed;
 
     player.setState(PlayerState.stumbling, duration: 1.6);
@@ -276,26 +372,41 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     _distanceToNextChallenge = GameConfig.gapBetweenChallenges;
   }
 
-  // ── الشعلات ──
+  // ── الشعلات والكتب ──
 
-  void _spawnTorch() {
-    // لا تُلقى شعلةٌ في وجه بوابةٍ مقبلة، كيلا تشتّت اللاعبَ عن القراءة.
+  /// تُلقى على الطريق شعلةٌ أو كتاب؛ الشعلةُ تنقل إلى إقليمٍ جديد،
+  /// والكتابُ يرقّي هيئةَ المسافر.
+  void _spawnPickup() {
+    _distanceToNextPickup =
+        GameConfig.pickupSpacing * (0.75 + _random.nextDouble() * 0.8);
+
+    // لا يُلقى شيءٌ في وجه بوابةٍ مقبلة كيلا يشتّت اللاعبَ عن القراءة.
     final gate = _activeGate;
-    final busy = gate != null && gate.distanceToPlayer < 1200;
-    _distanceToNextTorch = 520 + _random.nextDouble() * 620;
-    if (busy) return;
+    if (gate != null && gate.distanceToPlayer < 1200 && !isTurboActive) return;
 
     final lane = GameConfig.laneOffsets[_random.nextInt(GameConfig.laneCount)];
-    final torch = TorchPickup(
-      lateralX: lane,
-      spawnZ: GameConfig.challengeSpawnZ,
-      priority: 15,
-    );
-    _torches.add(torch);
-    world.add(torch);
+
+    // الكتبُ أندر؛ فهي التي ترقّي الهيئة.
+    if (_random.nextDouble() < 0.34) {
+      final book = BookPickup(
+        lateralX: lane,
+        spawnZ: GameConfig.challengeSpawnZ,
+        priority: 16,
+      );
+      _books.add(book);
+      world.add(book);
+    } else {
+      final torch = TorchPickup(
+        lateralX: lane,
+        spawnZ: GameConfig.challengeSpawnZ,
+        priority: 15,
+      );
+      _torches.add(torch);
+      world.add(torch);
+    }
   }
 
-  void _advanceTorches(double travelled) {
+  void _advancePickups(double travelled) {
     for (final torch in List<TorchPickup>.of(_torches)) {
       torch.z -= travelled;
 
@@ -303,17 +414,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         torch.collect();
         torchesCollected++;
         audio.play(GameSound.torch);
-        final head = player.headScreenPosition;
-        world.add(
-          FloatingText(
-            text: 'شعلة +١',
-            origin: Vector2(head.dx + 42, head.dy - 10),
-            color: const Color(0xFFFFC061),
-            fontSize: 20,
-            lifetime: 0.9,
-            priority: 50,
-          ),
-        );
+        _popup('شعلة +١', const Color(0xFFFFC061), 42);
         _publish();
       }
 
@@ -322,17 +423,59 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         _torches.remove(torch);
       }
     }
+
+    for (final book in List<BookPickup>.of(_books)) {
+      book.z -= travelled;
+
+      if (book.canBeCollectedBy(player.lateralX)) {
+        book.collect();
+        booksCollected++;
+        audio.play(GameSound.torch);
+        _popup('كتاب +١', const Color(0xFFE9C46A), -42);
+        _applyOutfit();
+        _publish();
+      }
+
+      if (book.isBehindCamera || book.isCollected) {
+        book.removeFromParent();
+        _books.remove(book);
+      }
+    }
   }
 
-  /// يبدّل جوَّ الرحلة مقابل شعلات. يُستدعى من الواجهة.
-  bool switchAtmosphere() {
-    if (torchesCollected < GameConfig.torchesPerAtmosphere) return false;
-    torchesCollected -= GameConfig.torchesPerAtmosphere;
-    scene.atmosphere = scene.atmosphere.next;
+  /// يرقّي هيئةَ المسافر إن بلَغ نصابَ زيٍّ جديد.
+  void _applyOutfit() {
+    final earned = Outfit.forBooks(booksCollected);
+    if (earned.id == player.outfit.id) return;
+
+    player.outfit = earned;
+    audio.play(GameSound.levelUp);
+    _announce('لبستَ زيَّ ${earned.title}', AppPalette.gold);
+  }
+
+  /// ينتقل اللاعبُ إلى إقليمٍ جديدٍ مقابل شعلاته. يُستدعى من الواجهة.
+  bool switchRealm() {
+    if (torchesCollected < GameConfig.torchesPerRealm) return false;
+    torchesCollected -= GameConfig.torchesPerRealm;
+    scene.realm = scene.realm.next;
     audio.play(GameSound.ambience);
-    _announce(scene.atmosphere.name, AppPalette.parchment);
+    _announce(scene.realm.name, AppPalette.parchment);
     _publish();
     return true;
+  }
+
+  void _popup(String text, Color color, double dx) {
+    final head = player.headScreenPosition;
+    world.add(
+      FloatingText(
+        text: text,
+        origin: Vector2(head.dx + dx, head.dy - 10),
+        color: color,
+        fontSize: 20,
+        lifetime: 0.95,
+        priority: 50,
+      ),
+    );
   }
 
   void _announce(String text, Color color) {
@@ -353,8 +496,13 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     hud.value = HudState(
       stats: sessionEngine.stats,
       torches: torchesCollected,
+      books: booksCollected,
       stage: selector.stage,
-      atmosphereName: scene.atmosphere.name,
+      realmName: scene.realm.name,
+      outfit: player.outfit,
+      booksToNextOutfit: Outfit.booksToNext(booksCollected),
+      turboReady: isTurboReady,
+      turboRemaining: _turboRemaining,
     );
   }
 
@@ -400,6 +548,10 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       _correction?.dismiss();
       return KeyEventResult.handled;
     }
+    if (event.logicalKey == LogicalKeyboardKey.keyT) {
+      startTurbo();
+      return KeyEventResult.handled;
+    }
     return KeyEventResult.ignored;
   }
 
@@ -410,5 +562,3 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   }
 }
 
-/// جوُّ البداية معروضٌ للواجهة قبل أن تبدأ اللعبة.
-const Atmosphere defaultAtmosphere = Atmosphere.dusk;

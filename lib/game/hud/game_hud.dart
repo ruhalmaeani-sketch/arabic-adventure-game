@@ -4,7 +4,7 @@ import '../../app/theme/app_palette.dart';
 import '../config/game_config.dart';
 import '../rihla_game.dart';
 
-/// شريطٌ علويٌّ خفيفٌ يعرض حالَ اللاعب، وزرُّ الشعلات أسفلَه.
+/// شريطٌ علويٌّ خفيفٌ يعرض حالَ اللاعب، وتحته ما يجمعه وما يستطيع فعلَه.
 ///
 /// السؤالُ نفسُه في العالم لا هنا؛ فبقيت الواجهةُ نحيفةً لا تزاحم المشهد.
 class GameHud extends StatelessWidget {
@@ -31,7 +31,7 @@ class GameHud extends StatelessWidget {
                     Expanded(child: _LevelBar(hud: hud)),
                     const SizedBox(width: 8),
                     _Badge(
-                      icon: Icons.local_fire_department_rounded,
+                      icon: Icons.bolt_rounded,
                       value: '${hud.stats.currentStreak}',
                       color: hud.stats.currentStreak >= 3
                           ? AppPalette.failure
@@ -40,12 +40,17 @@ class GameHud extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
+                Row(
+                  children: [
+                    _TorchButton(hud: hud, onTap: game.switchRealm),
+                    const SizedBox(width: 8),
+                    _BookMeter(hud: hud),
+                  ],
+                ),
+                const SizedBox(height: 8),
                 Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: _TorchButton(
-                    hud: hud,
-                    onTap: () => game.switchAtmosphere(),
-                  ),
+                  child: _TurboButton(hud: hud, onTap: game.startTurbo),
                 ),
               ],
             ),
@@ -71,7 +76,7 @@ class _LevelBar extends StatelessWidget {
           Row(
             children: [
               Text(
-                hud.stats.level.title,
+                hud.outfit.title,
                 style: const TextStyle(
                   fontFamily: 'Amiri',
                   fontSize: 17,
@@ -107,7 +112,7 @@ class _LevelBar extends StatelessWidget {
   }
 }
 
-/// زرُّ الشعلات: يعرض ما جُمِع، ويبدّل جوَّ الرحلة متى اكتمل النصاب.
+/// زرُّ الشعلات: ينقل اللاعبَ إلى إقليمٍ جديدٍ متى اكتمل النصاب.
 class _TorchButton extends StatelessWidget {
   const _TorchButton({required this.hud, required this.onTap});
 
@@ -116,7 +121,7 @@ class _TorchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ready = hud.canSwitchAtmosphere;
+    final ready = hud.canSwitchRealm;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -134,7 +139,7 @@ class _TorchButton extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                '${hud.torches}/${GameConfig.torchesPerAtmosphere}',
+                '${hud.torches}/${GameConfig.torchesPerRealm}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -143,12 +148,121 @@ class _TorchButton extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                ready ? 'بدّل الأجواء' : hud.atmosphereName,
+                ready ? 'ارحل إلى إقليمٍ جديد' : hud.realmName,
                 style: TextStyle(
                   fontFamily: 'Amiri',
                   fontSize: 15,
                   fontWeight: ready ? FontWeight.w700 : FontWeight.w400,
                   color: ready ? AppPalette.ink : AppPalette.inkSoft,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// عدّادُ الكتب وما بقي منها حتى الزيّ التالي.
+class _BookMeter extends StatelessWidget {
+  const _BookMeter({required this.hud});
+
+  final HudState hud;
+
+  @override
+  Widget build(BuildContext context) {
+    final remaining = hud.booksToNextOutfit;
+    return _Pill(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.menu_book_rounded,
+            size: 17,
+            color: Color(0xFF8E2F3F),
+          ),
+          const SizedBox(width: 5),
+          Text(
+            '${hud.books}',
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: AppPalette.ink,
+            ),
+          ),
+          if (remaining > 0) ...[
+            const SizedBox(width: 6),
+            Text(
+              'زيٌّ جديد بعد $remaining',
+              style: const TextStyle(fontSize: 12, color: AppPalette.inkSoft),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// زرُّ الانطلاق: يُفتح بعد سلسلةِ إصابات، ويطوي به اللاعبُ الطريقَ
+/// متجاوزًا البوابات دون أن تُحسب له ولا عليه.
+class _TurboButton extends StatelessWidget {
+  const _TurboButton({required this.hud, required this.onTap});
+
+  final HudState hud;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final active = hud.isTurboActive;
+    final ready = hud.turboReady;
+
+    if (!ready && !active) {
+      return _Pill(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.rocket_launch_rounded,
+              size: 17,
+              color: AppPalette.inkSoft.withValues(alpha: 0.5),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'الانطلاق يحتاج '
+              '${GameConfig.turboStreakRequirement} إجاباتٍ متّصلة',
+              style: const TextStyle(fontSize: 12, color: AppPalette.inkSoft),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        onTap: active ? null : onTap,
+        child: _Pill(
+          highlighted: true,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.rocket_launch_rounded,
+                size: 18,
+                color: AppPalette.gold,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                active
+                    ? 'منطلق… ${hud.turboRemaining.ceil()}'
+                    : 'انطلق وتجاوز',
+                style: const TextStyle(
+                  fontFamily: 'Amiri',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppPalette.ink,
                 ),
               ),
             ],

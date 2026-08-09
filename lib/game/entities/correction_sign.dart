@@ -9,11 +9,11 @@ import '../../domain/models/answer_result.dart';
 import '../config/game_config.dart';
 import '../text/arabic_text.dart';
 
-/// لافتةُ التصحيح: يقف عندها المعلّم فيسأل اللاعبَ سؤالًا يستنطق فكرَه،
-/// أو يعلّل له الصوابَ في كلمةٍ لطيفة.
+/// لافتةُ التصحيح: تعيد الجملةَ أمام عين اللاعب، وتبيّن له إعرابَ الكلمة،
+/// ثمّ يسأله المعلّمُ سؤالًا يستنطق فكرَه.
 ///
-/// لا تنصرف من تلقاء نفسها. تبقى حتى يلمس اللاعبُ الشاشة، فالتصحيحُ لا
-/// يُقرأ على عجل، والوقتُ في يد المتعلّم لا في يد المؤقّت.
+/// لا تنصرف من تلقاء نفسها؛ تبقى حتى يلمس اللاعبُ الشاشة. فالتصحيحُ لا يُقرأ
+/// على عجل، والوقتُ في يد المتعلّم لا في يد المؤقّت.
 class CorrectionSign extends PositionComponent with TapCallbacks {
   CorrectionSign({required this.result, required this.onDismissed})
       : super(
@@ -24,14 +24,16 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
   final AnswerResult result;
   final VoidCallback onDismissed;
 
+  late final TextPainter _sentencePainter;
+  late final TextPainter _verdictPainter;
   late final TextPainter _nudgePainter;
-  late final TextPainter _answerPainter;
   late final TextPainter _hintPainter;
   late final double _boardHeight;
 
-  static const double _boardWidth = 372;
+  static const double _boardWidth = 384;
   static const double _centerX = GameConfig.worldWidth / 2;
-  static const double _topY = 214;
+  static const double _topY = 176;
+  static const double _padding = 26;
   static const double _riseDuration = 0.34;
 
   double _elapsed = 0;
@@ -40,37 +42,62 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
 
   @override
   Future<void> onLoad() async {
-    _nudgePainter = ArabicText.painter(
-      result.nudge,
-      fontSize: 23,
-      color: AppPalette.ink,
-      maxWidth: _boardWidth - 52,
-      height: 1.85,
+    final question = result.question;
+    final innerWidth = _boardWidth - _padding * 2;
+
+    // الجملةُ أوّلًا: التصحيحُ بلا نصِّه معلَّقٌ في الهواء.
+    _sentencePainter = question.hasTargetWord
+        ? ArabicText.highlightedSentence(
+            question.sentence,
+            targetWordIndex: question.targetWordIndex,
+            fontSize: 26,
+            baseColor: AppPalette.ink,
+            highlightColor: const Color(0xFF9C3B1B),
+            maxWidth: innerWidth,
+            height: 1.7,
+          )
+        : ArabicText.painter(
+            question.sentence,
+            fontSize: 26,
+            color: AppPalette.ink,
+            maxWidth: innerWidth,
+          );
+
+    // الحكمُ صريحٌ: الكلمةُ وإعرابُها في سطرٍ واحد.
+    _verdictPainter = ArabicText.painter(
+      question.hasTargetWord
+          ? '«${question.targetWord}» ${question.correctAnswer.label}'
+          : question.correctAnswer.label,
+      fontSize: 25,
+      color: const Color(0xFF2F6B44),
       fontWeight: FontWeight.w700,
+      maxWidth: innerWidth,
     );
 
-    _answerPainter = ArabicText.painter(
-      'الصوابُ: ${result.question.correctAnswer.label}',
-      fontSize: 20,
-      color: AppPalette.success,
-      fontWeight: FontWeight.w700,
-      maxWidth: _boardWidth - 52,
+    _nudgePainter = ArabicText.painter(
+      result.nudge,
+      fontSize: 21,
+      color: AppPalette.inkSoft,
+      maxWidth: innerWidth,
+      height: 1.85,
     );
 
     _hintPainter = ArabicText.painter(
       'المس الشاشةَ لتُتابع رحلتَك',
       fontSize: 15,
-      color: AppPalette.inkSoft.withValues(alpha: 0.75),
-      maxWidth: _boardWidth - 52,
+      color: AppPalette.inkSoft.withValues(alpha: 0.7),
+      maxWidth: innerWidth,
     );
 
-    _boardHeight = 46 +
-        _nudgePainter.height +
+    _boardHeight = _padding +
+        _sentencePainter.height +
+        16 +
+        _verdictPainter.height +
         18 +
-        _answerPainter.height +
-        26 +
+        _nudgePainter.height +
+        22 +
         _hintPainter.height +
-        30;
+        _padding;
   }
 
   bool get _canDismiss => _elapsed >= GameConfig.correctionMinDuration;
@@ -80,7 +107,6 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
     _closing = true;
   }
 
-  /// أيُّ لمسةٍ على الشاشة تطوي اللافتةَ وتعيد اللاعبَ إلى طريقه.
   @override
   void onTapDown(TapDownEvent event) => dismiss();
 
@@ -89,7 +115,6 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
     super.update(dt);
     _elapsed += dt;
 
-    // لا انصرافَ بمرور الوقت؛ اللمسةُ وحدَها تُنهيها.
     if (_closing) {
       _closeProgress += dt * 4.2;
       if (_closeProgress >= 1) {
@@ -109,17 +134,16 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
   void render(Canvas canvas) {
     final appearance = _appearance;
     if (appearance <= 0) return;
+    final clamped = appearance.clamp(0.0, 1.0);
 
-    // تعتيمٌ خفيفٌ يُبرز اللافتة دون أن يحجب العالمَ خلفها.
     canvas.drawRect(
       Rect.fromLTWH(0, 0, GameConfig.worldWidth, GameConfig.worldHeight),
-      Paint()..color = Colors.black.withValues(alpha: 0.28 * appearance.clamp(0.0, 1.0)),
+      Paint()..color = Colors.black.withValues(alpha: 0.4 * clamped),
     );
 
-    _renderTeacher(canvas, appearance);
+    _renderTeacher(canvas, clamped);
 
     canvas.save();
-    // تنهض اللافتةُ من أسفلَ قليلًا مع ظهورها.
     canvas.translate(0, (1 - appearance) * 40);
 
     final rect = Rect.fromLTWH(
@@ -132,13 +156,13 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
 
     canvas.drawRRect(
       rrect.shift(const Offset(0, 8)),
-      Paint()..color = Colors.black.withValues(alpha: 0.32),
+      Paint()..color = Colors.black.withValues(alpha: 0.34),
     );
     canvas.drawRRect(rrect, Paint()..color = AppPalette.parchment);
     canvas.drawRRect(
       rrect.deflate(9),
       Paint()
-        ..color = AppPalette.woodDark.withValues(alpha: 0.35)
+        ..color = AppPalette.woodDark.withValues(alpha: 0.32)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2,
     );
@@ -150,37 +174,30 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
         ..strokeWidth = 7,
     );
 
-    // عمودا اللافتة المغروزان في الأرض.
     final postPaint = Paint()..color = AppPalette.woodDark;
-    for (final x in [_centerX - 96, _centerX + 96]) {
-      canvas.drawRect(
-        Rect.fromLTWH(x - 7, rect.bottom - 4, 14, 58),
-        postPaint,
-      );
+    for (final x in [_centerX - 100, _centerX + 100]) {
+      canvas.drawRect(Rect.fromLTWH(x - 7, rect.bottom - 4, 14, 58), postPaint);
     }
 
-    var cursorY = rect.top + 26;
+    var cursorY = rect.top + _padding;
     void write(TextPainter painter, double gap) {
-      painter.paint(
-        canvas,
-        Offset(_centerX - painter.width / 2, cursorY),
-      );
+      painter.paint(canvas, Offset(_centerX - painter.width / 2, cursorY));
       cursorY += painter.height + gap;
     }
 
-    write(_nudgePainter, 18);
+    write(_sentencePainter, 16);
 
     canvas.drawLine(
-      Offset(rect.left + 46, cursorY - 9),
-      Offset(rect.right - 46, cursorY - 9),
+      Offset(rect.left + 48, cursorY - 8),
+      Offset(rect.right - 48, cursorY - 8),
       Paint()
         ..color = AppPalette.parchmentDark
         ..strokeWidth = 1.5,
     );
 
-    write(_answerPainter, 26);
+    write(_verdictPainter, 18);
+    write(_nudgePainter, 22);
 
-    // نبضةٌ خفيفةٌ في التلميح تدلّ على أنّ اللافتة تنتظر لمسة.
     final pulse = 0.65 + 0.35 * math.sin(_elapsed * 3.1);
     canvas.saveLayer(
       null,
@@ -192,17 +209,16 @@ class CorrectionSign extends PositionComponent with TapCallbacks {
     canvas.restore();
   }
 
-  /// المعلّم: هيئةٌ وقورٌ تقف إلى جانب اللافتة.
   void _renderTeacher(Canvas canvas, double appearance) {
-    final x = 74 - (1 - appearance.clamp(0.0, 1.0)) * 70;
-    const feetY = 690.0;
+    final x = 74 - (1 - appearance) * 70;
+    const feetY = 726.0;
 
     canvas.save();
     canvas.translate(x, feetY);
 
     canvas.drawOval(
       Rect.fromCenter(center: const Offset(0, 4), width: 58, height: 14),
-      Paint()..color = Colors.black.withValues(alpha: 0.24),
+      Paint()..color = Colors.black.withValues(alpha: 0.26),
     );
 
     canvas.drawPath(
