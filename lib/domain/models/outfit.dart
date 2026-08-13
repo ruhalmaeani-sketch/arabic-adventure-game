@@ -1,7 +1,7 @@
 /// هيئةُ اللاعب: ثوبُه وعمامتُه وما يحمله.
 ///
-/// الأزياءُ لا تُشترى بعملة؛ تُفتح بجمع الكتب، فيكون تغيّرُ هيئةِ المسافر
-/// أثرًا لِما حصّله من علمٍ لا لِما أنفقه من مال.
+/// الأزياءُ لا تُشترى بعملة؛ تُفتح بجمع الكتب أو باجتياز مراحل المنهج،
+/// فيكون تغيّرُ هيئةِ المسافر أثرًا لِما حصّله من علمٍ لا لِما أنفقه من مال.
 class Outfit {
   const Outfit({
     required this.id,
@@ -10,6 +10,7 @@ class Outfit {
     required this.robeShade,
     required this.sash,
     required this.turban,
+    required this.turbanAccent,
     required this.booksRequired,
     this.hasCloak = false,
     this.carriesBook = false,
@@ -22,7 +23,10 @@ class Outfit {
   final int robe;
   final int robeShade;
   final int sash;
+
+  /// لونا العمامة: أساسُ لفّها، ولونُ شريط لفّاتها الثاني.
   final int turban;
+  final int turbanAccent;
 
   /// كم كتابًا يلزم لفتحه.
   final int booksRequired;
@@ -40,6 +44,7 @@ class Outfit {
     robeShade: 0xFFD8CFBE,
     sash: 0xFF3E6B62,
     turban: 0xFF3E6B62,
+    turbanAccent: 0xFFF7F3E6,
     booksRequired: 0,
   );
 
@@ -50,6 +55,7 @@ class Outfit {
     robeShade: 0xFFBFCCC0,
     sash: 0xFF2F5D3F,
     turban: 0xFFF7F3E6,
+    turbanAccent: 0xFF2F5D3F,
     booksRequired: 3,
     carriesBook: true,
   );
@@ -61,6 +67,7 @@ class Outfit {
     robeShade: 0xFFB4C0D8,
     sash: 0xFF2C3E66,
     turban: 0xFF2C3E66,
+    turbanAccent: 0xFFC9A227,
     booksRequired: 7,
     hasCloak: true,
     carriesBook: true,
@@ -73,6 +80,7 @@ class Outfit {
     robeShade: 0xFFD8B7A8,
     sash: 0xFF8E2F3F,
     turban: 0xFF8E2F3F,
+    turbanAccent: 0xFFF3E2DA,
     booksRequired: 12,
     hasCloak: true,
   );
@@ -84,12 +92,13 @@ class Outfit {
     robeShade: 0xFF272420,
     sash: 0xFFC9A227,
     turban: 0xFFF7F3E6,
+    turbanAccent: 0xFFC9A227,
     booksRequired: 18,
     hasCloak: true,
     carriesBook: true,
   );
 
-  /// الأزياءُ مرتَّبةً بحسب ما تتطلّبه من كتب.
+  /// الأزياءُ مرتَّبةً بحسب ما تتطلّبه من كتب، وهي ترتيبُ مراحل المنهج نفسُه.
   static const List<Outfit> all = [
     student,
     grammarian,

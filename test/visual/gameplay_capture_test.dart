@@ -13,6 +13,7 @@ import 'package:rihlat_alarabiyya/domain/engines/session_engine.dart';
 import 'package:rihlat_alarabiyya/domain/engines/staged_question_selector.dart';
 import 'package:rihlat_alarabiyya/domain/models/question.dart';
 import 'package:rihlat_alarabiyya/domain/models/outfit.dart';
+import 'package:rihlat_alarabiyya/domain/models/stage_definition.dart';
 import 'package:rihlat_alarabiyya/game/config/game_config.dart';
 import 'package:rihlat_alarabiyya/game/rihla_game.dart';
 import 'package:rihlat_alarabiyya/game/world/realm.dart';
@@ -61,7 +62,11 @@ void main() {
     });
   }
 
-  Future<RihlaGame> pumpGame(WidgetTester tester, {int seed = 3}) async {
+  Future<RihlaGame> pumpGame(
+    WidgetTester tester, {
+    int seed = 3,
+    StageDefinition? stageDefinitionOverride,
+  }) async {
     tester.view
       ..physicalSize = const Size(824, 1760)
       ..devicePixelRatio = 2;
@@ -73,6 +78,7 @@ void main() {
       random: Random(seed),
     );
     final game = RihlaGame(
+      stageIndex: 1,
       sessionEngine: SessionEngine(
         selector: selector,
         challengeFactory: ChallengeFactory(
@@ -82,6 +88,7 @@ void main() {
       ),
       selector: selector,
       random: Random(seed),
+      stageDefinitionOverride: stageDefinitionOverride,
     );
 
     await tester.pumpWidget(
@@ -224,6 +231,90 @@ void main() {
         reason: 'البوّابةُ المتجاوَزة لا تُحتسب إجابة');
     expect(after.currentStreak, before.currentStreak,
         reason: 'التجاوزُ لا يكسر السلسلة');
+  });
+
+  testWidgets('اجتيازُ نصاب المرحلة يُصدر حكمَ الفوز', (tester) async {
+    final game = await pumpGame(
+      tester,
+      seed: 21,
+      stageDefinitionOverride: const StageDefinition(
+        index: 1,
+        title: 'اختبار',
+        subtitle: '',
+        gatesPerStage: 2,
+        passScore: 2,
+      ),
+    );
+
+    for (var i = 0; i < 2; i++) {
+      var answered = false;
+      for (var f = 0; f < 900 && !answered; f++) {
+        await tester.pump(const Duration(milliseconds: 16));
+        final challenge = game.sessionEngine.currentChallenge;
+        if (challenge != null) {
+          game.player.targetX = GameConfig.laneOffsets[challenge.correctIndex];
+        }
+        answered = game.gatesAnswered == i + 1;
+      }
+      expect(answered, isTrue, reason: 'لم تُسجَّل البوّابة رقم ${i + 1}');
+    }
+
+    var emitted = false;
+    for (var f = 0; f < 150 && !emitted; f++) {
+      await tester.pump(const Duration(milliseconds: 16));
+      emitted = game.stageOutcome.value != null;
+    }
+    expect(emitted, isTrue, reason: 'لم يُصدَر حكمُ المرحلة');
+    expect(game.stageOutcome.value!.passed, isTrue);
+    expect(game.stageOutcome.value!.correct, 2);
+    await capture(tester, '08_stage_won');
+  });
+
+  testWidgets('القصورُ عن النصاب يُصدر حكمَ الخسارة', (tester) async {
+    final game = await pumpGame(
+      tester,
+      seed: 23,
+      stageDefinitionOverride: const StageDefinition(
+        index: 1,
+        title: 'اختبار',
+        subtitle: '',
+        gatesPerStage: 2,
+        passScore: 2,
+      ),
+    );
+
+    // إجابةٌ خاطئةٌ عمدًا، ثمّ صحيحةٌ: واحدٌ من اثنين، دون النصاب.
+    for (var i = 0; i < 2; i++) {
+      var answered = false;
+      for (var f = 0; f < 900 && !answered; f++) {
+        await tester.pump(const Duration(milliseconds: 16));
+        final challenge = game.sessionEngine.currentChallenge;
+        if (challenge != null) {
+          final laneIndex =
+              i == 0 ? 1 - challenge.correctIndex : challenge.correctIndex;
+          game.player.targetX = GameConfig.laneOffsets[laneIndex];
+        }
+        answered = game.gatesAnswered == i + 1;
+      }
+      expect(answered, isTrue, reason: 'لم تُسجَّل البوّابة رقم ${i + 1}');
+
+      if (game.phase == GamePhase.correcting) {
+        // انتظارُ الحدّ الأدنى قبل اللمس؛ اللمسةُ الفوريّةُ لا تُقبَل عمدًا.
+        await advance(tester, 0.6);
+        await tester.tapAt(const Offset(206, 440));
+        await advance(tester, 0.6);
+      }
+    }
+
+    var emitted = false;
+    for (var f = 0; f < 200 && !emitted; f++) {
+      await tester.pump(const Duration(milliseconds: 16));
+      emitted = game.stageOutcome.value != null;
+    }
+    expect(emitted, isTrue, reason: 'لم يُصدَر حكمُ المرحلة');
+    expect(game.stageOutcome.value!.passed, isFalse);
+    expect(game.stageOutcome.value!.correct, 1);
+    await capture(tester, '09_stage_lost');
   });
 }
 

@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "level": 5,
+  "title": "المستوى الخامس — التوابع",
+  "questions": [
+    {
+      "id": "q_l5_naat_001",
+      "kind": "irab",
+      "sentence": "قَرَأْتُ كِتَابًا نَافِعًا",
+      "targetWordIndex": 2,
+      "targetWord": "نَافِعًا",
+      "correctAnswer": {
+        "id": "naat",
+        "label": "نعت"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "رأى الفتحةَ فظنَّه مفعولًا به، والمفعولُ به هو «كِتَابًا»، وهذا وصفٌ له.",
+          "nudge": "المفعولُ به «كِتَابًا» قد ذُكِر، فما وظيفةُ ما وصفه بعده؟ 🤔"
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 5,
+      "difficulty": 2,
+      "explanation": "نَافِعًا: نعتٌ منصوبٌ؛ تبِع منعوتَه «كِتَابًا» في النصب والتنكير، ووصَفه.",
+      "xp": 12,
+      "tags": [
+        "naat"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_naat_002",
+      "kind": "irab",
+      "sentence": "جَاءَ الطَّالِبُ الْمُجْتَهِدُ",
+      "targetWordIndex": 2,
+      "targetWord": "الْمُجْتَهِدُ",
+      "correctAnswer": {
+        "id": "naat",
+        "label": "نعت"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ واحدٌ وهو «الطَّالِبُ»، وهذا تابعٌ له وصَفه.",
+          "nudge": "الفاعلُ «الطَّالِبُ» ذُكِر مرّةً واحدة 😉 فما وظيفةُ ما تبِعه؟"
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 5,
+      "difficulty": 2,
+      "explanation": "الْمُجْتَهِدُ: نعتٌ مرفوعٌ؛ تبِع الفاعلَ «الطَّالِبُ» في الرفع والتعريف، ووصَفه.",
+      "xp": 12,
+      "tags": [
+        "naat"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_naat_003",
+      "kind": "irab",
+      "sentence": "هَذَا رَجُلٌ كَرِيمٌ",
+      "targetWordIndex": 2,
+      "targetWord": "كَرِيمٌ",
+      "correctAnswer": {
+        "id": "naat",
+        "label": "نعت"
+      },
+      "wrongAnswers": [
+        {
+          "id": "khabar",
+          "label": "خبر",
+          "misconception": "الخبرُ هو «رَجُلٌ» وقد تمّ به المعنى، وهذا وصفٌ تابعٌ له.",
+          "nudge": "لو حذفتَ «كَرِيمٌ» أيبقى المعنى تامًّا؟ 😉 فما تمّ به المعنى خبرٌ، وما زاد وصفًا نعت."
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "كَرِيمٌ: نعتٌ مرفوعٌ؛ تبِع «رَجُلٌ» وهو الخبر، فوصَفه.",
+      "xp": 14,
+      "tags": [
+        "naat"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_naat_004",
+      "kind": "irab",
+      "sentence": "سَلَّمْتُ عَلَى الْمُعَلِّمِ الْفَاضِلِ",
+      "targetWordIndex": 3,
+      "targetWord": "الْفَاضِلِ",
+      "correctAnswer": {
+        "id": "naat",
+        "label": "نعت"
+      },
+      "wrongAnswers": [
+        {
+          "id": "badal",
+          "label": "بدل",
+          "misconception": "خلَط بينه وبين البدل، والبدلُ هو المقصودُ بالحكم لا وصفٌ للأوّل.",
+          "nudge": "هل «الْفَاضِلِ» هو المقصودُ بالسلام أم وصفٌ لِمن سلَّمتَ عليه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "الْفَاضِلِ: نعتٌ مجرورٌ؛ تبِع منعوتَه «الْمُعَلِّمِ» في الجرّ والتعريف.",
+      "xp": 14,
+      "tags": [
+        "naat"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_naat_005",
+      "kind": "irab",
+      "sentence": "اشْتَرَيْتُ ثَوْبًا جَمِيلًا",
+      "targetWordIndex": 2,
+      "targetWord": "جَمِيلًا",
+      "correctAnswer": {
+        "id": "naat",
+        "label": "نعت"
+      },
+      "wrongAnswers": [
+        {
+          "id": "hal",
+          "label": "حال",
+          "misconception": "خلَط بينه وبين الحال، والنعتُ يصف اسمًا نكرةً ملازمًا له لا هيئةً وقتَ الفعل.",
+          "nudge": "هل «جَمِيلًا» صفةٌ ثابتةٌ للثوب أم هيئةٌ وقتَ الشراء؟ 😉"
+        }
+      ],
+      "grammarTopic": "naat",
+      "level": 5,
+      "difficulty": 2,
+      "explanation": "جَمِيلًا: نعتٌ منصوبٌ؛ تبِع منعوتَه «ثَوْبًا» في النصب والتنكير.",
+      "xp": 12,
+      "tags": [
+        "naat"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_atf_001",
+      "kind": "irab",
+      "sentence": "حَضَرَ خَالِدٌ وَسَعِيدٌ",
+      "targetWordIndex": 2,
+      "targetWord": "وَسَعِيدٌ",
+      "correctAnswer": {
+        "id": "matoof",
+        "label": "معطوف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ هو «خَالِدٌ»، وهذا تبِعه بحرف العطف فأخَذ حكمَه في الرفع.",
+          "nudge": "الفاعلُ ذُكِر أوّلًا، فما وظيفةُ ما رُبِط به بحرف العطف؟ 🤔"
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "سَعِيدٌ: معطوفٌ على الفاعل «خَالِدٌ» مرفوعٌ، والواوُ حرفُ عطف.",
+      "xp": 14,
+      "tags": [
+        "atf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_atf_002",
+      "kind": "irab",
+      "sentence": "اشْتَرَيْتُ الْقَلَمَ وَالدَّفْتَرَ",
+      "targetWordIndex": 2,
+      "targetWord": "وَالدَّفْتَرَ",
+      "correctAnswer": {
+        "id": "matoof",
+        "label": "معطوف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ وصفٌ للمنعوت، وهذا اسمٌ مستقلٌّ رُبِط بالأوّل بحرف العطف لا وصفٌ له.",
+          "nudge": "هل «الدَّفْتَرَ» يصف القلمَ أم شيءٌ آخر عُطف عليه؟ 😉"
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 5,
+      "difficulty": 2,
+      "explanation": "الدَّفْتَرَ: معطوفٌ على المفعول به «الْقَلَمَ» منصوبٌ، والواوُ حرفُ عطف.",
+      "xp": 12,
+      "tags": [
+        "atf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_atf_003",
+      "kind": "irab",
+      "sentence": "نَجَحَ مُحَمَّدٌ وَعَلِيٌّ فِي الِامْتِحَانِ",
+      "targetWordIndex": 2,
+      "targetWord": "وَعَلِيٌّ",
+      "correctAnswer": {
+        "id": "matoof",
+        "label": "معطوف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "badal",
+          "label": "بدل",
+          "misconception": "البدلُ يكون هو المقصودَ وحدَه، وهذا شريكٌ للأوّل في الحكم لا بدلٌ عنه.",
+          "nudge": "هل نجَح «عَلِيٌّ» بدلًا عن «مُحَمَّدٍ»، أم نجَحا معًا؟ 🤔"
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "عَلِيٌّ: معطوفٌ على الفاعل «مُحَمَّدٌ» مرفوعٌ.",
+      "xp": 14,
+      "tags": [
+        "atf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_atf_004",
+      "kind": "irab",
+      "sentence": "أَكَلْتُ تُفَّاحَةً وَمَوْزَةً",
+      "targetWordIndex": 2,
+      "targetWord": "وَمَوْزَةً",
+      "correctAnswer": {
+        "id": "matoof",
+        "label": "معطوف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّه مفعولًا به مستقلًّا لا معطوفًا، مع أنَّه رُبِط بالأوّل بحرف عطف.",
+          "nudge": "هل سبَق «مَوْزَةً» حرفُ عطفٍ يربطها بما قبلها؟ 😉"
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 5,
+      "difficulty": 2,
+      "explanation": "مَوْزَةً: معطوفٌ على المفعول به «تُفَّاحَةً» منصوبٌ.",
+      "xp": 12,
+      "tags": [
+        "atf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_atf_005",
+      "kind": "irab",
+      "sentence": "سَلَّمْتُ عَلَى الْمُعَلِّمِ وَالْمُدِيرِ",
+      "targetWordIndex": 3,
+      "targetWord": "وَالْمُدِيرِ",
+      "correctAnswer": {
+        "id": "matoof",
+        "label": "معطوف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ يصف اسمًا واحدًا، وهذا اسمٌ ثانٍ مستقلٌّ عُطف على الأوّل.",
+          "nudge": "هل «الْمُدِيرِ» وصفٌ لِمن سلَّمتَ عليه، أم شخصٌ آخر عُطف عليه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "atf",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "الْمُدِيرِ: معطوفٌ على الاسم المجرور «الْمُعَلِّمِ» مجرورٌ مثله.",
+      "xp": 14,
+      "tags": [
+        "atf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_badal_001",
+      "kind": "irab",
+      "sentence": "جَاءَ أَخُوكَ خَالِدٌ",
+      "targetWordIndex": 2,
+      "targetWord": "خَالِدٌ",
+      "correctAnswer": {
+        "id": "badal",
+        "label": "بدل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "ظنَّه نعتًا لأنَّه تابعٌ بعد اسم، والبدلُ هو المقصودُ بالحكم لا وصفٌ للأوّل.",
+          "nudge": "هل «خَالِدٌ» يصف «أَخُوكَ» أم هو نفسُه المقصودُ بالحديث؟ 🤔 المقصودُ بالحكم بدلٌ لا نعت."
+        }
+      ],
+      "grammarTopic": "badal",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "خَالِدٌ: بدلٌ مطابقٌ من «أَخُوكَ» مرفوعٌ؛ وهو المقصودُ الحقيقيُّ بالمجيء.",
+      "xp": 14,
+      "tags": [
+        "badal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_badal_002",
+      "kind": "irab",
+      "sentence": "زَارَنِي صَدِيقِي سَعِيدٌ",
+      "targetWordIndex": 2,
+      "targetWord": "سَعِيدٌ",
+      "correctAnswer": {
+        "id": "badal",
+        "label": "بدل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "tawkid",
+          "label": "توكيد",
+          "misconception": "التوكيدُ يكرّر معنى المؤكَّد بلفظٍ خاصّ كـ«نفس» أو تكرار اللفظ، وهذا اسمٌ علمٌ يوضّح الأوّل لا يكرّره.",
+          "nudge": "هل «سَعِيدٌ» من ألفاظ التوكيد المعروفة، أم اسمٌ يوضّح مَن الصديق؟ 😉"
+        }
+      ],
+      "grammarTopic": "badal",
+      "level": 5,
+      "difficulty": 4,
+      "explanation": "سَعِيدٌ: بدلٌ مطابقٌ من «صَدِيقِي» مرفوعٌ؛ يوضّح المقصودَ به.",
+      "xp": 16,
+      "tags": [
+        "badal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_badal_003",
+      "kind": "irab",
+      "sentence": "قَرَأْتُ الْكِتَابَ نِصْفَهُ",
+      "targetWordIndex": 2,
+      "targetWord": "نِصْفَهُ",
+      "correctAnswer": {
+        "id": "badal",
+        "label": "بدل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّه مفعولًا به ثانيًا مستقلًّا، وهو جزءٌ من الأوّل يفسّر المقصودَ منه.",
+          "nudge": "هل «نِصْفَهُ» شيءٌ آخر غيرُ الكتاب أم جزءٌ منه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "badal",
+      "level": 5,
+      "difficulty": 4,
+      "explanation": "نِصْفَهُ: بدلُ بعضٍ من كلٍّ من «الْكِتَابَ» منصوبٌ، واتّصل به ضميرٌ يعود على المُبدَل منه.",
+      "xp": 16,
+      "tags": [
+        "badal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_badal_004",
+      "kind": "irab",
+      "sentence": "أَكْرَمْتُ الْمُعَلِّمَ عَلِيًّا",
+      "targetWordIndex": 2,
+      "targetWord": "عَلِيًّا",
+      "correctAnswer": {
+        "id": "badal",
+        "label": "بدل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ وصفٌ لا اسمَ علمٍ يحلّ محلَّ الأوّل في الحكم.",
+          "nudge": "هل «عَلِيًّا» يصف المعلّمَ أم يبيّن اسمَه بعينه؟ 😉"
+        }
+      ],
+      "grammarTopic": "badal",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "عَلِيًّا: بدلٌ مطابقٌ من «الْمُعَلِّمَ» منصوبٌ؛ يبيّن المقصودَ بالإكرام.",
+      "xp": 14,
+      "tags": [
+        "badal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_badal_005",
+      "kind": "irab",
+      "sentence": "أَعْجَبَنِي الْبُسْتَانُ أَشْجَارُهُ",
+      "targetWordIndex": 2,
+      "targetWord": "أَشْجَارُهُ",
+      "correctAnswer": {
+        "id": "badal",
+        "label": "بدل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ هو «الْبُسْتَانُ»، وهذا بدلُ اشتمالٍ يبيّن جزءًا من معنى المُبدَل منه لا فاعلًا آخر.",
+          "nudge": "هل «أَشْجَارُهُ» فاعلٌ ثانٍ للفعل، أم جزءٌ من معنى البستان أُبدِل منه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "badal",
+      "level": 5,
+      "difficulty": 4,
+      "explanation": "أَشْجَارُهُ: بدلُ اشتمالٍ من «الْبُسْتَانُ» مرفوعٌ؛ يشتمل عليه معناه، واتّصل به ضميرٌ يعود على المُبدَل منه.",
+      "xp": 16,
+      "tags": [
+        "badal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_tawkid_001",
+      "kind": "irab",
+      "sentence": "جَاءَ الْأَمِيرُ نَفْسُهُ",
+      "targetWordIndex": 2,
+      "targetWord": "نَفْسُهُ",
+      "correctAnswer": {
+        "id": "tawkid",
+        "label": "توكيد"
+      },
+      "wrongAnswers": [
+        {
+          "id": "badal",
+          "label": "بدل",
+          "misconception": "خلَط بينه وبين البدل، والتوكيدُ يكرّر معنى المؤكَّد بلفظٍ خاصٍّ لا يخالفه.",
+          "nudge": "هل «نَفْسُهُ» معنًى آخر غيرُ الأمير أم تقريرٌ لذاته؟ 😉 لفظُ «نفس» من ألفاظ التوكيد المعنويّ."
+        }
+      ],
+      "grammarTopic": "tawkid",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "نَفْسُهُ: توكيدٌ معنويٌّ مرفوعٌ للفاعل «الْأَمِيرُ»؛ يرفع احتمالَ المجاز.",
+      "xp": 14,
+      "tags": [
+        "tawkid"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_tawkid_002",
+      "kind": "irab",
+      "sentence": "حَضَرَ الطُّلَّابُ كُلُّهُمْ",
+      "targetWordIndex": 2,
+      "targetWord": "كُلُّهُمْ",
+      "correctAnswer": {
+        "id": "tawkid",
+        "label": "توكيد"
+      },
+      "wrongAnswers": [
+        {
+          "id": "badal",
+          "label": "بدل",
+          "misconception": "ظنَّه بدلًا يوضّح الأوّل، والتوكيدُ بلفظ «كلّ» يفيد الشمولَ لا التوضيح.",
+          "nudge": "هل «كُلُّهُمْ» تبيّن فردًا معيّنًا أم تفيد شمولَ الحكم لجميعهم؟ 🤔"
+        }
+      ],
+      "grammarTopic": "tawkid",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "كُلُّهُمْ: توكيدٌ معنويٌّ مرفوعٌ؛ يفيد شمولَ الحضور لجميع الطلّاب.",
+      "xp": 14,
+      "tags": [
+        "tawkid"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_tawkid_003",
+      "kind": "irab",
+      "sentence": "نَجَحَ الطَّالِبُ الطَّالِبُ",
+      "targetWordIndex": 1,
+      "targetWord": "الطَّالِبُ",
+      "correctAnswer": {
+        "id": "tawkid",
+        "label": "توكيد"
+      },
+      "wrongAnswers": [
+        {
+          "id": "badal",
+          "label": "بدل",
+          "misconception": "ظنَّه بدلًا لأنَّه اسمٌ بعد اسم، والتوكيدَ اللفظيَّ يكرّر اللفظَ نفسَه بعينه لا يستبدله.",
+          "nudge": "هل تكرّرت الكلمةُ نفسُها بعينها، أم جاء اسمٌ آخر يوضّح الأوّل؟ 😉"
+        }
+      ],
+      "grammarTopic": "tawkid",
+      "level": 5,
+      "difficulty": 4,
+      "explanation": "الطَّالِبُ (الثاني): توكيدٌ لفظيٌّ مرفوعٌ؛ كرَّر اللفظَ الأوّلَ بعينه لتقرير معناه.",
+      "xp": 16,
+      "tags": [
+        "tawkid"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_tawkid_004",
+      "kind": "irab",
+      "sentence": "اجْتَهِدْ أَنْتَ فِي دُرُوسِكَ",
+      "targetWordIndex": 1,
+      "targetWord": "أَنْتَ",
+      "correctAnswer": {
+        "id": "tawkid",
+        "label": "توكيد"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ هنا ضميرٌ مستترٌ تقديرُه «أنتَ»، وهذا ضميرٌ منفصلٌ جاء يؤكّده لا فاعلًا جديدًا.",
+          "nudge": "الفعلُ «اجْتَهِدْ» فاعلُه مستترٌ 😉 فما وظيفةُ الضمير المنفصل الذي أكّده؟"
+        }
+      ],
+      "grammarTopic": "tawkid",
+      "level": 5,
+      "difficulty": 4,
+      "explanation": "أَنْتَ: توكيدٌ للضمير المستتر في الفعل «اجْتَهِدْ»، وهو في محلّ رفع.",
+      "xp": 16,
+      "tags": [
+        "tawkid"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l5_tawkid_005",
+      "kind": "irab",
+      "sentence": "جَاءَ الْقَائِدُ عَيْنُهُ",
+      "targetWordIndex": 2,
+      "targetWord": "عَيْنُهُ",
+      "correctAnswer": {
+        "id": "tawkid",
+        "label": "توكيد"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "النعتُ وصفٌ، ولفظُ «عين» من ألفاظ التوكيد المعنويّ المعروفة لا وصفًا.",
+          "nudge": "هل «عَيْنُهُ» تصف القائدَ أم تقرّر أنَّه هو بذاته؟ 🤔"
+        }
+      ],
+      "grammarTopic": "tawkid",
+      "level": 5,
+      "difficulty": 3,
+      "explanation": "عَيْنُهُ: توكيدٌ معنويٌّ مرفوعٌ للفاعل «الْقَائِدُ».",
+      "xp": 14,
+      "tags": [
+        "tawkid"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    }
+  ]
+}

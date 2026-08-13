@@ -9,9 +9,12 @@ import 'package:flutter/widgets.dart';
 import '../app/theme/app_palette.dart';
 import '../domain/content/encouragement.dart';
 import '../domain/engines/session_engine.dart';
+import '../domain/engines/stage_grader.dart';
 import '../domain/engines/staged_question_selector.dart';
 import '../domain/models/answer_result.dart';
 import '../domain/models/outfit.dart';
+import '../domain/models/stage_definition.dart';
+import '../domain/models/stage_outcome.dart';
 import '../services/audio_service.dart';
 import 'config/game_config.dart';
 import 'entities/book_pickup.dart';
@@ -25,16 +28,21 @@ import 'world/realm.dart';
 import 'world/scenery.dart';
 
 /// أطوار الحلقة الأساسيّة.
-enum GamePhase { travelling, approaching, rewarding, correcting }
+enum GamePhase { travelling, approaching, rewarding, correcting, stageOver }
 
-/// حصيلةٌ معروضةٌ للواجهة: حالُ اللاعب وما جمعه وما بلغه من المراحل.
+/// حصيلةٌ معروضةٌ للواجهة: حالُ اللاعب وما جمعه وموضعُه من مرحلته.
 @immutable
 class HudState {
   const HudState({
     required this.stats,
     required this.torches,
     required this.books,
-    required this.stage,
+    required this.stageIndex,
+    required this.stageTitle,
+    required this.gatesAnswered,
+    required this.gatesCorrect,
+    required this.gatesTotal,
+    required this.passScore,
     required this.realmName,
     required this.outfit,
     required this.booksToNextOutfit,
@@ -45,7 +53,14 @@ class HudState {
   final SessionStats stats;
   final int torches;
   final int books;
-  final int stage;
+
+  final int stageIndex;
+  final String stageTitle;
+  final int gatesAnswered;
+  final int gatesCorrect;
+  final int gatesTotal;
+  final int passScore;
+
   final String realmName;
   final Outfit outfit;
   final int booksToNextOutfit;
@@ -60,15 +75,23 @@ class HudState {
 
 /// اللعبة: طريقٌ يمتدّ إلى الأفق، واللاعب يصعده من أسفل الشاشة إلى أعلاها،
 /// فتقبل عليه بوابةٌ تحمل جملةً وبابين، فيجيب بدخوله أحدَهما.
+///
+/// كلُّ لعبةٍ مرحلةٌ واحدةٌ من مراحل المنهج: عشرون بوّابةً، فإن أصاب اللاعبُ
+/// نصابَ النجاح فيها فقد فاز، وإلّا فقد خسر — والحكمُ في [StageGrader].
 class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   RihlaGame({
+    required this.stageIndex,
     required this.sessionEngine,
     required this.selector,
     AudioService? audio,
     math.Random? random,
-  })  : audio = audio ?? SilentAudioService(),
+    StageDefinition? stageDefinitionOverride,
+    int initialBooks = 0,
+  })  : stageDef = stageDefinitionOverride ?? StageCatalog.byIndex(stageIndex),
+        audio = audio ?? SilentAudioService(),
         _random = random ?? math.Random(),
         _encouragement = Encouragement(random: random),
+        booksCollected = initialBooks,
         super(
           camera: CameraComponent.withFixedResolution(
             width: GameConfig.worldWidth,
@@ -76,10 +99,17 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
           ),
         );
 
+  /// رقمُ المرحلة الحاليّة من ١، ويحدّد ملفَّ الأسئلة والإقليمَ والزيّ الأساسيّ.
+  final int stageIndex;
+
   final SessionEngine sessionEngine;
 
-  /// محرّكُ الاختيار المتدرّج؛ نحتفظ به لنعرض رقمَ المرحلة للاعب.
+  /// محرّكُ الاختيار المتدرّج داخل بنك أسئلة هذه المرحلة وحدَها.
   final StagedQuestionSelector selector;
+
+  /// منهجُ المرحلة: عددُ بوّاباتها ونصابُ نجاحها. قابلٌ للتجاوز في الاختبارات
+  /// لتقصير المرحلة، فلا تنتظر الاختباراتُ عشرين بوّابةً كاملة.
+  final StageDefinition stageDef;
 
   final AudioService audio;
   final math.Random _random;
@@ -90,14 +120,22 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       stats: const SessionStats(),
       torches: 0,
       books: 0,
-      stage: 1,
-      realmName: Realm.palmVillage.name,
+      stageIndex: 1,
+      stageTitle: '',
+      gatesAnswered: 0,
+      gatesCorrect: 0,
+      gatesTotal: 0,
+      passScore: 0,
+      realmName: '',
       outfit: Outfit.student,
       booksToNextOutfit: Outfit.booksToNext(0),
       turboReady: false,
       turboRemaining: 0,
     ),
   );
+
+  /// نتيجةُ المرحلة بعد اكتمال بوّاباتها؛ `null` ما دامت جاريةً.
+  final ValueNotifier<StageOutcome?> stageOutcome = ValueNotifier(null);
 
   final SceneState scene = SceneState();
 
@@ -111,8 +149,12 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   final List<BookPickup> _books = [];
 
   int torchesCollected = 0;
-  int booksCollected = 0;
-  int _stage = 1;
+  int booksCollected;
+
+  int _gatesAnswered = 0;
+  int _gatesCorrect = 0;
+  bool _pendingStageEnd = false;
+  double _stageEndTimer = 0;
 
   /// ما بقي من زمن الانطلاق؛ صفرٌ إن كان المسافرُ على سيره المعتاد.
   double _turboRemaining = 0;
@@ -125,20 +167,31 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   double _dragStartPointerX = 0;
   double _dragStartTargetX = 0;
 
+  /// كم بوّابةً أُجيب عنها حتّى الآن — للاختبارات والمراقبة.
+  int get gatesAnswered => _gatesAnswered;
+  int get gatesCorrect => _gatesCorrect;
+
+  int get _baseOutfitIndex =>
+      (stageIndex - 1).clamp(0, Outfit.all.length - 1);
+
   @override
   Future<void> onLoad() async {
     camera.viewfinder
       ..anchor = Anchor.topLeft
       ..position = Vector2.zero();
 
+    scene.realm = Realm.all[(stageIndex - 1) % Realm.all.length];
+
     world.addAll([
       SkyLayer(scene, priority: 0),
       RoadLayer(scene, priority: 1),
     ]);
 
-    player = PlayerCharacter(priority: 40);
+    player = PlayerCharacter(priority: 40)
+      ..sizeScale = 1.0 + (stageIndex - 1) * 0.12;
     world.add(player);
 
+    _applyOutfit(announce: false);
     _publish();
   }
 
@@ -157,16 +210,56 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     _advancePickups(travelled);
     _applyLaneMagnetism(dt);
     _applyReadingSlowdown();
+    _advanceStageEnd(dt);
 
-    if (phase == GamePhase.travelling || phase == GamePhase.rewarding) {
+    final canSpawnMore = _gatesAnswered < stageDef.gatesPerStage;
+    if (canSpawnMore &&
+        (phase == GamePhase.travelling || phase == GamePhase.rewarding)) {
       _distanceToNextChallenge -= travelled;
       if (_distanceToNextChallenge <= 0 && _activeGate == null) {
         _spawnChallenge();
       }
     }
 
-    _distanceToNextPickup -= travelled;
-    if (_distanceToNextPickup <= 0) _spawnPickup();
+    if (canSpawnMore) {
+      _distanceToNextPickup -= travelled;
+      if (_distanceToNextPickup <= 0) _spawnPickup();
+    }
+  }
+
+  // ── نهاية المرحلة ──
+
+  /// ينتظر خروجَ آخر بوّابةٍ وانصرافَ لافتة التصحيح إن كانت قائمة، ثمّ يُصدر
+  /// حكمَ المرحلة بعد لحظةٍ قصيرةٍ تكفي لرؤية أثر آخر إجابة.
+  void _advanceStageEnd(double dt) {
+    if (!_pendingStageEnd) return;
+    if (_activeGate != null || phase == GamePhase.correcting) return;
+
+    _stageEndTimer += dt;
+    _targetSpeed = GameConfig.correctionSpeed;
+
+    if (_stageEndTimer >= 0.9) {
+      _pendingStageEnd = false;
+      _emitStageOutcome();
+    }
+  }
+
+  void _emitStageOutcome() {
+    phase = GamePhase.stageOver;
+    _targetSpeed = 0;
+
+    final passed = StageGrader.passed(
+      correct: _gatesCorrect,
+      passScore: stageDef.passScore,
+    );
+    audio.play(passed ? GameSound.levelUp : GameSound.wrong);
+
+    stageOutcome.value = StageOutcome(
+      stageIndex: stageIndex,
+      correct: _gatesCorrect,
+      total: stageDef.gatesPerStage,
+      passScore: stageDef.passScore,
+    );
   }
 
   // ── الانطلاق ──
@@ -177,7 +270,8 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   bool get isTurboReady =>
       !isTurboActive &&
       sessionEngine.stats.currentStreak >= GameConfig.turboStreakRequirement &&
-      phase != GamePhase.correcting;
+      phase != GamePhase.correcting &&
+      phase != GamePhase.stageOver;
 
   /// ينطلق المسافرُ فيطوي الطريقَ ويتجاوز البوابات دون أن تُحسب له ولا عليه.
   bool startTurbo() {
@@ -231,7 +325,8 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     }
   }
 
-  /// يمرّ المنطلقُ بالبوابة دون أن يُجيب، فلا تُحسب له ولا عليه.
+  /// يمرّ المنطلقُ بالبوابة دون أن يُجيب، فلا تُحسب له ولا عليه، ولا تُعَدّ
+  /// من بوّابات المرحلة العشرين.
   void _skipGate(ChallengeGate gate) {
     sessionEngine.skipCurrent();
     gate.markSkipped();
@@ -245,7 +340,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         origin: Vector2(head.dx, head.dy - 44),
         color: AppPalette.parchment,
         fontSize: 20,
-        lifetime: 0.9,
+        lifetime: 1.3,
         priority: 50,
       ),
     );
@@ -293,12 +388,6 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
 
     phase = GamePhase.approaching;
     _targetSpeed = GameConfig.challengeSpeed;
-
-    if (selector.stage != _stage) {
-      _stage = selector.stage;
-      audio.play(GameSound.stage);
-      _announce('المرحلة $_stage — ترتفع الصعوبة', AppPalette.parchment);
-    }
     _publish();
   }
 
@@ -307,6 +396,13 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     final result = sessionEngine.submitLane(laneIndex);
 
     gate.markResolved(laneIndex: laneIndex, isCorrect: result.isCorrect);
+
+    _gatesAnswered++;
+    if (result.isCorrect) _gatesCorrect++;
+    if (_gatesAnswered >= stageDef.gatesPerStage) {
+      _pendingStageEnd = true;
+      _stageEndTimer = 0;
+    }
 
     if (result.isCorrect) {
       _onCorrect(result);
@@ -331,6 +427,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
             '   +${result.xpAwarded}',
         origin: Vector2(head.dx, head.dy - 40),
         color: AppPalette.gold,
+        lifetime: 1.7,
         priority: 50,
       ),
     );
@@ -342,7 +439,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
           origin: Vector2(head.dx, head.dy - 92),
           color: AppPalette.success,
           fontSize: 19,
-          lifetime: 1.5,
+          lifetime: 2.0,
           priority: 50,
         ),
       );
@@ -368,6 +465,10 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   void _resumeAfterCorrection() {
     _correction = null;
     phase = GamePhase.travelling;
+    if (_pendingStageEnd) {
+      // تنتهي المرحلةُ بعد لحظةٍ في _advanceStageEnd، فلا داعي لاستئناف السرعة.
+      return;
+    }
     _targetSpeed = GameConfig.cruiseSpeed;
     _distanceToNextChallenge = GameConfig.gapBetweenChallenges;
   }
@@ -443,14 +544,21 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
     }
   }
 
-  /// يرقّي هيئةَ المسافر إن بلَغ نصابَ زيٍّ جديد.
-  void _applyOutfit() {
-    final earned = Outfit.forBooks(booksCollected);
+  /// يرقّي هيئةَ المسافر إلى أرقى ما استحقّه بين أساس مرحلته وعدد كتبه.
+  ///
+  /// لا تتراجع الهيئةُ أبدًا: أساسُ المرحلة أرضيّةٌ لا سقف، والكتبُ قد
+  /// ترفعها فوق ذلك داخل المرحلة نفسِها.
+  void _applyOutfit({bool announce = true}) {
+    final bookIndex = Outfit.all.indexOf(Outfit.forBooks(booksCollected));
+    final index = math.max(_baseOutfitIndex, bookIndex);
+    final earned = Outfit.all[index];
     if (earned.id == player.outfit.id) return;
 
     player.outfit = earned;
-    audio.play(GameSound.levelUp);
-    _announce('لبستَ زيَّ ${earned.title}', AppPalette.gold);
+    if (announce) {
+      audio.play(GameSound.levelUp);
+      _announce('لبستَ زيَّ ${earned.title}', AppPalette.gold);
+    }
   }
 
   /// ينتقل اللاعبُ إلى إقليمٍ جديدٍ مقابل شعلاته. يُستدعى من الواجهة.
@@ -472,7 +580,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         origin: Vector2(head.dx + dx, head.dy - 10),
         color: color,
         fontSize: 20,
-        lifetime: 0.95,
+        lifetime: 1.35,
         priority: 50,
       ),
     );
@@ -485,7 +593,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
         origin: Vector2(GameConfig.worldWidth / 2, GameConfig.horizonY + 96),
         color: color,
         fontSize: 24,
-        lifetime: 2.0,
+        lifetime: 2.7,
         rise: 26,
         priority: 55,
       ),
@@ -497,7 +605,12 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
       stats: sessionEngine.stats,
       torches: torchesCollected,
       books: booksCollected,
-      stage: selector.stage,
+      stageIndex: stageIndex,
+      stageTitle: stageDef.title,
+      gatesAnswered: _gatesAnswered,
+      gatesCorrect: _gatesCorrect,
+      gatesTotal: stageDef.gatesPerStage,
+      passScore: stageDef.passScore,
       realmName: scene.realm.name,
       outfit: player.outfit,
       booksToNextOutfit: Outfit.booksToNext(booksCollected),
@@ -558,7 +671,7 @@ class RihlaGame extends FlameGame with PanDetector, KeyboardEvents {
   @override
   void onRemove() {
     hud.dispose();
+    stageOutcome.dispose();
     super.onRemove();
   }
 }
-

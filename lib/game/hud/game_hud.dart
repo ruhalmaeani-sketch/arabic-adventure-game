@@ -76,23 +76,19 @@ class _LevelBar extends StatelessWidget {
           Row(
             children: [
               Text(
-                hud.outfit.title,
+                '${hud.stageIndex}. ${hud.stageTitle}',
                 style: const TextStyle(
                   fontFamily: 'Amiri',
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: AppPalette.ink,
                 ),
               ),
-              const SizedBox(width: 8),
-              Text(
-                'المرحلة ${hud.stage}',
-                style: const TextStyle(fontSize: 12, color: AppPalette.inkSoft),
-              ),
               const Spacer(),
               Text(
-                '${hud.stats.xp} خبرة',
-                style: const TextStyle(fontSize: 13, color: AppPalette.inkSoft),
+                '${hud.gatesAnswered}/${hud.gatesTotal}'
+                ' • صحيحٌ ${hud.gatesCorrect}',
+                style: const TextStyle(fontSize: 12, color: AppPalette.inkSoft),
               ),
             ],
           ),
@@ -100,10 +96,16 @@ class _LevelBar extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
-              value: hud.stats.levelProgress,
+              value: hud.gatesTotal == 0
+                  ? 0
+                  : hud.gatesAnswered / hud.gatesTotal,
               minHeight: 6,
               backgroundColor: AppPalette.parchmentDark,
-              valueColor: const AlwaysStoppedAnimation(AppPalette.gold),
+              valueColor: AlwaysStoppedAnimation(
+                hud.gatesCorrect >= hud.passScore
+                    ? AppPalette.success
+                    : AppPalette.gold,
+              ),
             ),
           ),
         ],

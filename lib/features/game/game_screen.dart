@@ -8,12 +8,18 @@ import '../../data/repositories/asset_question_repository.dart';
 import '../../domain/engines/challenge_factory.dart';
 import '../../domain/engines/session_engine.dart';
 import '../../domain/engines/staged_question_selector.dart';
+import '../../domain/models/stage_definition.dart';
 import '../../services/audio_service.dart';
 import '../../game/config/game_config.dart';
 import '../../game/hud/game_hud.dart';
+import '../../game/overlays/stage_result_overlay.dart';
 import '../../game/rihla_game.dart';
 
-/// شاشةُ اللعب: تحمّل بنك الأسئلة، ثمّ تُسلّمه إلى محرّك الجلسة واللعبة.
+/// شاشةُ اللعب: تحمّل بنك أسئلة المرحلة الحاليّة، ثمّ تُسلّمه إلى محرّك
+/// الجلسة واللعبة.
+///
+/// كلُّ مرحلةٍ لعبةٌ جديدة: عند الفوز أو إعادة المحاولة تُنشأ [RihlaGame]
+/// من جديد ببنك أسئلة المرحلة المطلوبة، فلا تتسرّب حالةُ مرحلةٍ إلى أخرى.
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
@@ -22,11 +28,12 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  late final Future<RihlaGame> _gameFuture = _createGame();
+  int _stageIndex = 1;
+  late Future<RihlaGame> _gameFuture = _createGame(_stageIndex);
 
-  Future<RihlaGame> _createGame() async {
+  Future<RihlaGame> _createGame(int stageIndex) async {
     final repository = AssetQuestionRepository();
-    final questions = await repository.loadLevel(1);
+    final questions = await repository.loadLevel(stageIndex);
 
     final audio = FlameAudioService();
     // تحميلُ الأصوات لا يُعطّل بدءَ اللعب إن تعذّر.
@@ -38,6 +45,7 @@ class _GameScreenState extends State<GameScreen> {
     );
 
     return RihlaGame(
+      stageIndex: stageIndex,
       sessionEngine: SessionEngine(
         selector: selector,
         challengeFactory: ChallengeFactory(laneCount: GameConfig.laneCount),
@@ -45,6 +53,13 @@ class _GameScreenState extends State<GameScreen> {
       selector: selector,
       audio: audio,
     );
+  }
+
+  void _goToStage(int stageIndex) {
+    setState(() {
+      _stageIndex = stageIndex;
+      _gameFuture = _createGame(stageIndex);
+    });
   }
 
   @override
@@ -65,10 +80,19 @@ class _GameScreenState extends State<GameScreen> {
           }
           return Stack(
             children: [
-              GameWidget(game: game, autofocus: true),
+              GameWidget(key: ValueKey(game), game: game, autofocus: true),
               GameHud(
                 game: game,
                 onExit: () => Navigator.of(context).maybePop(),
+              ),
+              StageResultOverlay(
+                game: game,
+                onNextStage: () {
+                  if (StageCatalog.hasStage(_stageIndex + 1)) {
+                    _goToStage(_stageIndex + 1);
+                  }
+                },
+                onRetryStage: () => _goToStage(_stageIndex),
               ),
             ],
           );

@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "level": 3,
+  "title": "المستوى الثالث — المنصوبات",
+  "questions": [
+    {
+      "id": "q_l3_mafool_001",
+      "kind": "irab",
+      "sentence": "يَحْفَظُ الطَّالِبُ الدَّرْسَ",
+      "targetWordIndex": 2,
+      "targetWord": "الدَّرْسَ",
+      "correctAnswer": {
+        "id": "mafool_bih",
+        "label": "مفعول به"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "لم ينتبه إلى الفتحة، وإلى أنَّ الفاعلَ قد ذُكِر قبله.",
+          "nudge": "هل «الدَّرْسَ» هو الذي قام بالحفظ أم وقَع عليه الحفظُ؟ 🤔"
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 3,
+      "difficulty": 1,
+      "explanation": "الدَّرْسَ: مفعولٌ به منصوبٌ؛ لأنَّه وقَع عليه فعلُ الحفظ.",
+      "xp": 10,
+      "tags": [
+        "mafool_bih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mafool_002",
+      "kind": "irab",
+      "sentence": "زَرَعَ الْفَلَّاحُ الشَّجَرَةَ",
+      "targetWordIndex": 2,
+      "targetWord": "الشَّجَرَةَ",
+      "correctAnswer": {
+        "id": "mafool_bih",
+        "label": "مفعول به"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "خلَط بين من قام بالزرع وما وقَع عليه الزرعُ.",
+          "nudge": "الشجرةُ زرَعت أم زُرِعت؟ 🤔 وما وقَع عليه الفعلُ فهو مفعولٌ به."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 3,
+      "difficulty": 1,
+      "explanation": "الشَّجَرَةَ: مفعولٌ به منصوبٌ بالفتحة؛ والفاعلُ «الْفَلَّاحُ».",
+      "xp": 10,
+      "tags": [
+        "mafool_bih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mafool_003",
+      "kind": "irab",
+      "sentence": "فَتَحَ الْخَادِمُ الْبَابَ",
+      "targetWordIndex": 2,
+      "targetWord": "الْبَابَ",
+      "correctAnswer": {
+        "id": "mafool_bih",
+        "label": "مفعول به"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "أعرب آخِرَ الجملة فاعلًا، والفاعلُ هنا متقدّمٌ عليه.",
+          "nudge": "هل البابُ هو الذي فتَح؟ 😉 انظر إلى الفتحة في آخره."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 3,
+      "difficulty": 1,
+      "explanation": "الْبَابَ: مفعولٌ به منصوبٌ بالفتحة؛ لأنَّه ما وقَع عليه الفتحُ.",
+      "xp": 10,
+      "tags": [
+        "mafool_bih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mafool_004",
+      "kind": "irab",
+      "sentence": "يُتْقِنُ الصَّانِعُ عَمَلَهُ",
+      "targetWordIndex": 2,
+      "targetWord": "عَمَلَهُ",
+      "correctAnswer": {
+        "id": "mafool_bih",
+        "label": "مفعول به"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "الفاعلُ «الصَّانِعُ» قد ذُكِر، فلا يصحّ أن يكون ما بعده فاعلًا آخر.",
+          "nudge": "من الذي أتقن العمل؟ 🤔 ذُكِر قبله، فما وظيفةُ المنصوب بعده؟"
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "عَمَلَهُ: مفعولٌ به منصوبٌ، وهو مضافٌ، والهاءُ ضميرٌ مضافٌ إليه.",
+      "xp": 12,
+      "tags": [
+        "mafool_bih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mafool_005",
+      "kind": "irab",
+      "sentence": "يُكْرِمُ الْكَرِيمُ ضَيْفَهُ",
+      "targetWordIndex": 2,
+      "targetWord": "ضَيْفَهُ",
+      "correctAnswer": {
+        "id": "mafool_bih",
+        "label": "مفعول به"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fael",
+          "label": "فاعل",
+          "misconception": "ظنَّ أنَّ الضيف هو الفاعلُ، والفاعلُ من وقَع منه الإكرامُ لا من وقَع عليه.",
+          "nudge": "الضيفُ يُكرَم أم يُكرِم؟ 😉 وما وقَع عليه الفعلُ فهو مفعولٌ به."
+        }
+      ],
+      "grammarTopic": "mafool_bih",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "ضَيْفَهُ: مفعولٌ به منصوبٌ، وهو مضافٌ، والهاءُ في محلّ جرٍّ مضافٌ إليه.",
+      "xp": 12,
+      "tags": [
+        "mafool_bih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_dharf_001",
+      "kind": "irab",
+      "sentence": "سَافَرْتُ لَيْلًا",
+      "targetWordIndex": 1,
+      "targetWord": "لَيْلًا",
+      "correctAnswer": {
+        "id": "dharf",
+        "label": "ظرف زمان"
+      },
+      "wrongAnswers": [
+        {
+          "id": "hal",
+          "label": "حال",
+          "misconception": "يظنّه حالًا لأنَّه منصوبٌ، والحالُ يصف هيئةً لا زمنًا.",
+          "nudge": "هل «لَيْلًا» يصف هيئةَ صاحبها أم يدلّ على وقتِ السفر؟ 🤔"
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "لَيْلًا: ظرفُ زمانٍ منصوبٌ؛ يبيّن الوقتَ الذي وقَع فيه السفر.",
+      "xp": 12,
+      "tags": [
+        "dharf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_dharf_002",
+      "kind": "irab",
+      "sentence": "جَلَسْتُ أَمَامَ الْمَسْجِدِ",
+      "targetWordIndex": 1,
+      "targetWord": "أَمَامَ",
+      "correctAnswer": {
+        "id": "dharf",
+        "label": "ظرف مكان"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "رأى الفتحةَ فظنَّه مفعولًا به، وهو يدلّ على مكانٍ لا ذاتٍ وقَع عليها الفعل.",
+          "nudge": "هل «أَمَامَ» شيءٌ وقَع عليه الجلوسُ، أم مكانٌ وقَع فيه؟ 😉"
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "أَمَامَ: ظرفُ مكانٍ منصوبٌ، وهو مضافٌ، و«الْمَسْجِدِ» مضافٌ إليه.",
+      "xp": 12,
+      "tags": [
+        "dharf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_dharf_003",
+      "kind": "irab",
+      "sentence": "انْتَظَرْتُهُ سَاعَةً",
+      "targetWordIndex": 1,
+      "targetWord": "سَاعَةً",
+      "correctAnswer": {
+        "id": "dharf",
+        "label": "ظرف زمان"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_mutlaq",
+          "label": "مفعول مطلق",
+          "misconception": "ظنَّه مفعولًا مطلقًا لأنَّه منصوبٌ بعد الفعل، وهو ليس من لفظ الفعل.",
+          "nudge": "هل «سَاعَةً» مصدرٌ من لفظ «انتظرتُ» أم بيانٌ لمدّة الانتظار؟ 🤔"
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "سَاعَةً: ظرفُ زمانٍ منصوبٌ؛ يبيّن مدّةَ وقوع الانتظار.",
+      "xp": 14,
+      "tags": [
+        "dharf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_dharf_004",
+      "kind": "irab",
+      "sentence": "وَقَفَ الْحَارِسُ عِنْدَ الْبَابِ",
+      "targetWordIndex": 2,
+      "targetWord": "عِنْدَ",
+      "correctAnswer": {
+        "id": "dharf",
+        "label": "ظرف مكان"
+      },
+      "wrongAnswers": [
+        {
+          "id": "hal",
+          "label": "حال",
+          "misconception": "ظنَّه حالًا يبيّن هيئة الحارس، وهو يدلّ على مكان وقوفه لا هيئته.",
+          "nudge": "هل «عِنْدَ» تصف هيئةَ الحارس أم تبيّن مكانَ وقوفه؟ 😉"
+        }
+      ],
+      "grammarTopic": "dharf",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "عِنْدَ: ظرفُ مكانٍ منصوبٌ، وهو مضافٌ، و«الْبَابِ» مضافٌ إليه.",
+      "xp": 12,
+      "tags": [
+        "dharf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mutlaq_001",
+      "kind": "irab",
+      "sentence": "اجْتَهَدَ الطَّالِبُ اجْتِهَادًا",
+      "targetWordIndex": 2,
+      "targetWord": "اجْتِهَادًا",
+      "correctAnswer": {
+        "id": "mafool_mutlaq",
+        "label": "مفعول مطلق"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "رأى منصوبًا بعد الفعل فظنَّه مفعولًا به، والمفعولَ المطلق مصدرٌ من لفظ فعله يؤكّده لا اسمٌ وقَع عليه الفعل.",
+          "nudge": "هل «اجْتِهَادًا» شيءٌ وقَع عليه فعلُ الاجتهاد، أم هو مصدرُ الفعل نفسِه يؤكّده؟ 😉"
+        }
+      ],
+      "grammarTopic": "mafool_mutlaq",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "اجْتِهَادًا: مفعولٌ مطلقٌ منصوبٌ؛ مصدرٌ من لفظ فعله «اجْتَهَدَ» جاء لتوكيده.",
+      "xp": 14,
+      "tags": [
+        "mafool_mutlaq"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mutlaq_002",
+      "kind": "irab",
+      "sentence": "ضَرَبَ الْمُعَلِّمُ الْجَرَسَ ضَرْبَتَيْنِ",
+      "targetWordIndex": 3,
+      "targetWord": "ضَرْبَتَيْنِ",
+      "correctAnswer": {
+        "id": "mafool_mutlaq",
+        "label": "مفعول مطلق"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ كلَّ منصوبٍ بعد المفعول به مفعولًا به آخر.",
+          "nudge": "هل «ضَرْبَتَيْنِ» شيءٌ آخر وقَع عليه الضربُ، أم بيانٌ لعدد مرّاته؟ 🤔"
+        }
+      ],
+      "grammarTopic": "mafool_mutlaq",
+      "level": 3,
+      "difficulty": 4,
+      "explanation": "ضَرْبَتَيْنِ: مفعولٌ مطلقٌ منصوبٌ بالياء؛ يبيّن عدد مرّات الفعل، من لفظه.",
+      "xp": 16,
+      "tags": [
+        "mafool_mutlaq"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mutlaq_003",
+      "kind": "irab",
+      "sentence": "سِرْتُ سَيْرًا حَثِيثًا",
+      "targetWordIndex": 1,
+      "targetWord": "سَيْرًا",
+      "correctAnswer": {
+        "id": "mafool_mutlaq",
+        "label": "مفعول مطلق"
+      },
+      "wrongAnswers": [
+        {
+          "id": "hal",
+          "label": "حال",
+          "misconception": "ظنَّه حالًا لأنَّه منصوبٌ نكرة، وهو مصدرٌ من لفظ الفعل يؤكّده لا يصف هيئةَ صاحبه.",
+          "nudge": "هل «سَيْرًا» صفةُ هيئةٍ، أم مصدرُ فعل «سِرْتُ» نفسِه؟ 😉"
+        }
+      ],
+      "grammarTopic": "mafool_mutlaq",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "سَيْرًا: مفعولٌ مطلقٌ منصوبٌ؛ مصدرٌ من لفظ فعله، و«حَثِيثًا» نعتٌ له.",
+      "xp": 14,
+      "tags": [
+        "mafool_mutlaq"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_mutlaq_004",
+      "kind": "irab",
+      "sentence": "فَرِحْتُ فَرَحًا شَدِيدًا بِنَجَاحِكَ",
+      "targetWordIndex": 1,
+      "targetWord": "فَرَحًا",
+      "correctAnswer": {
+        "id": "mafool_mutlaq",
+        "label": "مفعول مطلق"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_liajlih",
+          "label": "مفعول لأجله",
+          "misconception": "خلَط بينه وبين المفعول لأجله، والمفعولَ المطلق من لفظ الفعل نفسِه لا سببٌ له.",
+          "nudge": "هل «فَرَحًا» سببُ فعلٍ آخر أم هو مصدرُ الفعل «فَرِحْتُ» نفسِه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "mafool_mutlaq",
+      "level": 3,
+      "difficulty": 4,
+      "explanation": "فَرَحًا: مفعولٌ مطلقٌ منصوبٌ؛ مصدرٌ من لفظ فعله «فَرِحْتُ» يؤكّده.",
+      "xp": 16,
+      "tags": [
+        "mafool_mutlaq"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_liajlih_001",
+      "kind": "irab",
+      "sentence": "وَقَفَ التَّلَامِيذُ احْتِرَامًا لِلْمُعَلِّمِ",
+      "targetWordIndex": 2,
+      "targetWord": "احْتِرَامًا",
+      "correctAnswer": {
+        "id": "mafool_liajlih",
+        "label": "مفعول لأجله"
+      },
+      "wrongAnswers": [
+        {
+          "id": "hal",
+          "label": "حال",
+          "misconception": "ظنَّه حالًا لأنَّه منصوبٌ نكرة، والمفعولَ لأجله يبيّن السببَ لا الهيئة.",
+          "nudge": "هل «احْتِرَامًا» تصف هيئةَ التلاميذ أم تبيّن سببَ وقوفهم؟ 🤔"
+        }
+      ],
+      "grammarTopic": "mafool_liajlih",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "احْتِرَامًا: مفعولٌ لأجله منصوبٌ؛ يبيّن سببَ الوقوف.",
+      "xp": 14,
+      "tags": [
+        "mafool_liajlih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_liajlih_002",
+      "kind": "irab",
+      "sentence": "سَكَتُّ خَوْفًا مِنَ الْفِتْنَةِ",
+      "targetWordIndex": 1,
+      "targetWord": "خَوْفًا",
+      "correctAnswer": {
+        "id": "mafool_liajlih",
+        "label": "مفعول لأجله"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_mutlaq",
+          "label": "مفعول مطلق",
+          "misconception": "خلَط بينه وبين المفعول المطلق، وهو ليس من لفظ فعل «سكتُّ».",
+          "nudge": "هل «خَوْفًا» مصدرٌ من لفظ «سَكَتُّ»، أم سببٌ دفَع إلى السكوت؟ 😉"
+        }
+      ],
+      "grammarTopic": "mafool_liajlih",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "خَوْفًا: مفعولٌ لأجله منصوبٌ؛ يبيّن سببَ السكوت، وليس من لفظ الفعل.",
+      "xp": 14,
+      "tags": [
+        "mafool_liajlih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_liajlih_003",
+      "kind": "irab",
+      "sentence": "اجْتَهَدَ الطَّالِبُ رَغْبَةً فِي التَّفَوُّقِ",
+      "targetWordIndex": 2,
+      "targetWord": "رَغْبَةً",
+      "correctAnswer": {
+        "id": "mafool_liajlih",
+        "label": "مفعول لأجله"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ كلَّ منصوبٍ بعد الفاعل مفعولًا به.",
+          "nudge": "هل «رَغْبَةً» وقَع عليها فعلُ الاجتهاد، أم هي سببُ حصوله؟ 🤔"
+        }
+      ],
+      "grammarTopic": "mafool_liajlih",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "رَغْبَةً: مفعولٌ لأجله منصوبٌ؛ يبيّن سببَ الاجتهاد.",
+      "xp": 14,
+      "tags": [
+        "mafool_liajlih"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_hal_001",
+      "kind": "irab",
+      "sentence": "عَادَ الْمُسَافِرُ مَسْرُورًا",
+      "targetWordIndex": 2,
+      "targetWord": "مَسْرُورًا",
+      "correctAnswer": {
+        "id": "hal",
+        "label": "حال"
+      },
+      "wrongAnswers": [
+        {
+          "id": "tamyiz",
+          "label": "تمييز",
+          "misconception": "خلَط بينه وبين التمييز، والحالُ يبيّن هيئةً لا يرفع إبهام ذات.",
+          "nudge": "هل «مَسْرُورًا» يرفع إبهامَ ذاتٍ أم يبيّن هيئةَ صاحبه عند الفعل؟ 😉"
+        }
+      ],
+      "grammarTopic": "hal",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "مَسْرُورًا: حالٌ منصوبةٌ؛ تبيّن هيئةَ المسافر عند عودته.",
+      "xp": 12,
+      "tags": [
+        "hal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_hal_002",
+      "kind": "irab",
+      "sentence": "أَقْبَلَ الْفَارِسُ مُسْرِعًا",
+      "targetWordIndex": 2,
+      "targetWord": "مُسْرِعًا",
+      "correctAnswer": {
+        "id": "hal",
+        "label": "حال"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "خلَط بينه وبين النعت، والحالُ يصف صاحبَه حين وقوع الفعل لا يصف اسمًا نكرة.",
+          "nudge": "هل «مُسْرِعًا» نعتٌ لاسمٍ نكرةٍ، أم يبيّن هيئةَ الفارس وهو يُقبِل؟ 🤔"
+        }
+      ],
+      "grammarTopic": "hal",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "مُسْرِعًا: حالٌ منصوبةٌ؛ تبيّن هيئةَ الفارس عند إقباله.",
+      "xp": 12,
+      "tags": [
+        "hal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_hal_003",
+      "kind": "irab",
+      "sentence": "شَرِبْتُ الْمَاءَ بَارِدًا",
+      "targetWordIndex": 2,
+      "targetWord": "بَارِدًا",
+      "correctAnswer": {
+        "id": "hal",
+        "label": "حال"
+      },
+      "wrongAnswers": [
+        {
+          "id": "naat",
+          "label": "نعت",
+          "misconception": "ظنَّه نعتًا للماء، لكنَّ النعت يتبع منعوته تعريفًا وتنكيرًا وموضعه بعده مباشرة لوصفه لا لبيان هيئته وقت الفعل.",
+          "nudge": "هل «بَارِدًا» تصف الماءَ في ذاته أم هيئتَه وقتَ الشرب؟ 😉"
+        }
+      ],
+      "grammarTopic": "hal",
+      "level": 3,
+      "difficulty": 3,
+      "explanation": "بَارِدًا: حالٌ منصوبةٌ؛ تبيّن هيئةَ الماء حين وقوع فعل الشرب.",
+      "xp": 14,
+      "tags": [
+        "hal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l3_hal_004",
+      "kind": "irab",
+      "sentence": "جَاءَ الطَّالِبُ ضَاحِكًا",
+      "targetWordIndex": 2,
+      "targetWord": "ضَاحِكًا",
+      "correctAnswer": {
+        "id": "hal",
+        "label": "حال"
+      },
+      "wrongAnswers": [
+        {
+          "id": "mafool_bih",
+          "label": "مفعول به",
+          "misconception": "ظنَّ كلَّ منصوبٍ بعد الفاعل مفعولًا به دون النظر إلى معناه.",
+          "nudge": "هل «ضَاحِكًا» شيءٌ وقَع عليه المجيء، أم هيئةُ الطالب وهو يجيء؟ 🤔"
+        }
+      ],
+      "grammarTopic": "hal",
+      "level": 3,
+      "difficulty": 2,
+      "explanation": "ضَاحِكًا: حالٌ منصوبةٌ؛ تبيّن هيئةَ الطالب حين مجيئه.",
+      "xp": 12,
+      "tags": [
+        "hal"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    }
+  ]
+}

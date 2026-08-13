@@ -25,6 +25,9 @@ class PlayerCharacter extends Component {
   /// شدّةُ الانطلاق (٠ إلى ١) — تُطيل الخطوَ وتُظهر أثرًا خلف المسافر.
   double turbo = 0;
 
+  /// مقياسُ حجم اللاعب؛ يكبر مع تقدّمه في مراحل المنهج.
+  double sizeScale = 1.0;
+
   double _targetX = 0;
   double _phase = 0;
   double _stateTimer = 0;
@@ -56,7 +59,7 @@ class PlayerCharacter extends Component {
   Offset get headScreenPosition => Perspective.project(
         lateralX,
         GameConfig.playerZ,
-        height: GameConfig.playerHeight,
+        height: GameConfig.playerHeight * sizeScale,
       );
 
   void setState(PlayerState next, {double duration = 1.0}) {
@@ -87,7 +90,7 @@ class PlayerCharacter extends Component {
 
   @override
   void render(Canvas canvas) {
-    final scale = Perspective.scaleAt(GameConfig.playerZ);
+    final scale = Perspective.scaleAt(GameConfig.playerZ) * sizeScale;
     final feet = Perspective.project(lateralX, GameConfig.playerZ);
 
     canvas.save();
@@ -169,27 +172,14 @@ class PlayerCharacter extends Component {
 
     if (outfit.carriesBook) _renderCarriedBook(canvas);
 
-    // الرقبة والعمامة
+    // الرقبة
     canvas.drawCircle(
       const Offset(0, -94),
       12,
       Paint()..color = AppPalette.skin,
     );
-    canvas.drawCircle(
-      const Offset(0, -100),
-      15,
-      Paint()..color = Color(outfit.turban),
-    );
-    canvas.drawArc(
-      Rect.fromCircle(center: const Offset(0, -100), radius: 15),
-      math.pi * 0.15,
-      math.pi * 0.7,
-      false,
-      Paint()
-        ..color = Colors.black.withValues(alpha: 0.14)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
-    );
+
+    _renderTurban(canvas);
 
     if (state == PlayerState.celebrating) {
       canvas.drawCircle(
@@ -200,6 +190,70 @@ class PlayerCharacter extends Component {
     }
 
     canvas.restore();
+  }
+
+  /// عمامةٌ ملفوفةٌ من لونين، بتعرّجاتِ طيٍّ وذؤابةٍ صغيرة — لا قبّعةٌ صمّاء.
+  void _renderTurban(Canvas canvas) {
+    const center = Offset(0, -101);
+    const radius = 16.0;
+    final main = Color(outfit.turban);
+    final accent = Color(outfit.turbanAccent);
+
+    // القاعدة العريضة للفّة.
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: radius * 2.15, height: radius * 1.9),
+      Paint()..color = main,
+    );
+
+    // لفّاتٌ مائلةٌ باللون الثاني تكسو صفحةَ العمامة، كأنّها شريطُ قماشٍ ملفوف.
+    final wrapPaint = Paint()
+      ..color = accent
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round;
+    for (final dy in [-6.0, -0.5, 5.0]) {
+      canvas.drawArc(
+        Rect.fromCenter(
+          center: center.translate(0, dy),
+          width: radius * 2.05,
+          height: radius * 1.55,
+        ),
+        math.pi * 0.08,
+        math.pi * 0.86,
+        false,
+        wrapPaint,
+      );
+    }
+
+    // تعرّجاتُ الطيّ: خطوطٌ داكنةٌ خفيفةٌ تكسر استواءَ السطح.
+    final creasePaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.15)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.3;
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius * 0.95),
+      math.pi * 0.18,
+      math.pi * 0.62,
+      false,
+      creasePaint,
+    );
+    canvas.drawArc(
+      Rect.fromCircle(center: center.translate(0, -4), radius: radius * 0.7),
+      math.pi * 0.25,
+      math.pi * 0.5,
+      false,
+      creasePaint,
+    );
+
+    // ذؤابةٌ صغيرةٌ متدلّيةٌ جانبًا، تفصيلٌ أخير يكسر تناظرَ الشكل.
+    canvas.drawPath(
+      Path()
+        ..moveTo(12, -105)
+        ..quadraticBezierTo(21, -97, 15, -87)
+        ..quadraticBezierTo(12, -93, 9, -99)
+        ..close(),
+      Paint()..color = accent.withValues(alpha: 0.92),
+    );
   }
 
   /// بِشتٌ يتماوج مع الخطو.
