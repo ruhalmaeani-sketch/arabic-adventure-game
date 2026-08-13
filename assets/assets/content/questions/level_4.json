@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "level": 4,
+  "title": "المستوى الرابع — الجملة الاسميّة والفعليّة",
+  "questions": [
+    {
+      "id": "q_l4_ismiyya_001",
+      "kind": "sentence_type",
+      "sentence": "الْعِلْمُ نُورٌ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 10,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_002",
+      "kind": "sentence_type",
+      "sentence": "الصِّدْقُ مَنْجَاةٌ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 10,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_003",
+      "kind": "sentence_type",
+      "sentence": "الْكِتَابُ صَدِيقٌ وَفِيٌّ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 10,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_004",
+      "kind": "sentence_type",
+      "sentence": "الْوَقْتُ كَالسَّيْفِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 10,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_005",
+      "kind": "sentence_type",
+      "sentence": "الطُّلَّابُ مُجْتَهِدُونَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 10,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_006",
+      "kind": "sentence_type",
+      "sentence": "الْأُمُّ مَدْرَسَةٌ عَظِيمَةٌ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 12,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_007",
+      "kind": "sentence_type",
+      "sentence": "السَّمَاءُ صَافِيَةٌ الْيَوْمَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 12,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_008",
+      "kind": "sentence_type",
+      "sentence": "الْمُعَلِّمُ حَاضِرٌ فِي الْفَصْلِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 12,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_009",
+      "kind": "sentence_type",
+      "sentence": "الْقَمَرُ مُنِيرٌ اللَّيْلَةَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 12,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_ismiyya_010",
+      "kind": "sentence_type",
+      "sentence": "النَّظَافَةُ مِنَ الْإِيمَانِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_ismiyya",
+        "label": "جملة اسمية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_filiyya",
+          "label": "جملة فعلية",
+          "misconception": "الجملةُ الفعليّةُ تبدأ بفعلٍ، وهذه بدأت باسم.",
+          "nudge": "بمَ بدأت الجملةُ: باسمٍ أم بفعل؟ 🤔 وبالبداية يُعرف نوعُها لا بوجود فعلٍ في أثنائها."
+        }
+      ],
+      "grammarTopic": "jumla_ismiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ اسميّةٌ؛ لأنَّها بدأت باسمٍ وهو المبتدأ.",
+      "xp": 12,
+      "tags": [
+        "jumla_ismiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_001",
+      "kind": "sentence_type",
+      "sentence": "يَقْرَأُ الطَّالِبُ كِتَابًا",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 10,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_002",
+      "kind": "sentence_type",
+      "sentence": "كَتَبَ التِّلْمِيذُ الْوَاجِبَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 10,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_003",
+      "kind": "sentence_type",
+      "sentence": "يَلْعَبُ الْأَطْفَالُ فِي الْحَدِيقَةِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 10,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_004",
+      "kind": "sentence_type",
+      "sentence": "سَافَرَ أَبِي إِلَى الْمَدِينَةِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 10,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_005",
+      "kind": "sentence_type",
+      "sentence": "تُشْرِقُ الشَّمْسُ صَبَاحًا",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 1,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 10,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_006",
+      "kind": "sentence_type",
+      "sentence": "يَحْفَظُ الطَّالِبُ الْقُرْآنَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 12,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_007",
+      "kind": "sentence_type",
+      "sentence": "نَجَحَ الْمُجْتَهِدُ فِي الِامْتِحَانِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 12,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_008",
+      "kind": "sentence_type",
+      "sentence": "تُزْهِرُ الْأَشْجَارُ فِي الرَّبِيعِ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 12,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_009",
+      "kind": "sentence_type",
+      "sentence": "يُسَاعِدُ الْكَبِيرُ الصَّغِيرَ",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 12,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l4_filiyya_010",
+      "kind": "sentence_type",
+      "sentence": "رَجَعَ الْمُسَافِرُ سَالِمًا",
+      "targetWordIndex": -1,
+      "targetWord": "",
+      "correctAnswer": {
+        "id": "jumla_filiyya",
+        "label": "جملة فعلية"
+      },
+      "wrongAnswers": [
+        {
+          "id": "jumla_ismiyya",
+          "label": "جملة اسمية",
+          "misconception": "الجملةُ الاسميّةُ تبدأ باسمٍ، وهذه بدأت بفعل.",
+          "nudge": "بمَ بدأت الجملةُ: بفعلٍ أم باسم؟ 😉 والعبرةُ بأوّل الجملة لا بما فيها من أسماء."
+        }
+      ],
+      "grammarTopic": "jumla_filiyya",
+      "level": 4,
+      "difficulty": 2,
+      "explanation": "هي جملةٌ فعليّةٌ؛ لأنَّها بدأت بفعلٍ وهو عمدةُ الجملة الفعليّة.",
+      "xp": 12,
+      "tags": [
+        "jumla_filiyya"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    }
+  ]
+}

@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "level": 1,
+  "title": "المستوى الأوّل — أقسامُ الكلام",
+  "questions": [
+    {
+      "id": "q_l1_pos_001",
+      "kind": "irab",
+      "sentence": "الْكِتَابُ مُفِيدٌ",
+      "targetWordIndex": 0,
+      "targetWord": "الْكِتَابُ",
+      "correctAnswer": {
+        "id": "ism",
+        "label": "اسم"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "ظنَّه فعلًا لأنَّه أوّلُ الجملة، ولم ينظر إلى علاماته.",
+          "nudge": "هل يقبل «الْكِتَابُ» أنْ تدخلَ عليه «أل» التعريف؟ 😉 والفعلُ لا تدخله أل."
+        }
+      ],
+      "grammarTopic": "ism",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الْكِتَابُ: اسمٌ؛ لأنَّه قَبِلَ «أل» التعريفَ، وهذه من أخصّ علامات الاسم.",
+      "xp": 10,
+      "tags": [
+        "ism"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_002",
+      "kind": "irab",
+      "sentence": "يَكْتُبُ الطَّالِبُ الدَّرْسَ",
+      "targetWordIndex": 0,
+      "targetWord": "يَكْتُبُ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "ظنَّ كلَّ كلمةٍ في أوّل الجملة اسمًا.",
+          "nudge": "هل يصحّ أن تقول «قَدْ يَكْتُبُ»؟ 🤔 دخولُ «قد» عليه علامةُ الفعل المضارع."
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "يَكْتُبُ: فعلٌ مضارعٌ؛ لأنَّه قَبِلَ دخولَ «قد» عليه، وهذا لا يكون في الاسم.",
+      "xp": 10,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_003",
+      "kind": "irab",
+      "sentence": "ذَهَبْتُ إِلَى الْمَدْرَسَةِ",
+      "targetWordIndex": 1,
+      "targetWord": "إِلَى",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "رآها كلمةً قصيرةً فحسِبها اسمًا لصغرها لا لعلامتها.",
+          "nudge": "هل يصحّ أن تُنوَّنَ «إِلَى» أو تدخلَها «أل»؟ 😉 الحرفُ لا يقبل شيئًا من علامات الاسم."
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "إِلَى: حرفُ جرٍّ؛ لأنَّه لا يقبل التنوينَ ولا «أل» ولا الإسنادَ، وهذه علاماتُ الاسم كلُّها منتفيةٌ عنه.",
+      "xp": 12,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_004",
+      "kind": "irab",
+      "sentence": "سَافَرَ الرَّجُلُ لَيْلًا",
+      "targetWordIndex": 0,
+      "targetWord": "سَافَرَ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "لم ينتبه إلى أنَّ الكلمة تدلّ على حدثٍ مضى في زمن.",
+          "nudge": "هل يصحّ أن تقول «سَافَرْتُ» فتتّصلَ به تاءُ الفاعل؟ 🤔 هذا القبولُ علامةُ الفعل الماضي."
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "سَافَرَ: فعلٌ ماضٍ؛ لأنَّه يقبل اتّصالَ تاء الفاعل به، وهذه من أخصّ علامات الفعل.",
+      "xp": 10,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_005",
+      "kind": "irab",
+      "sentence": "فِي الْبَيْتِ رَجُلٌ",
+      "targetWordIndex": 0,
+      "targetWord": "فِي",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "خلَط بينها وبين الأسماء القصيرة لقصر لفظها.",
+          "nudge": "هل لِـ«فِي» معنًى يتمّ بنفسها، أم لا يتمّ معناها إلّا مع ما بعدها؟ 😉"
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "فِي: حرفُ جرٍّ؛ لا يقبل علاماتِ الاسم، ولا معنى له مستقلًّا عمّا يتعلّق به.",
+      "xp": 12,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_006",
+      "kind": "irab",
+      "sentence": "هَذَا قَلَمٌ جَمِيلٌ",
+      "targetWordIndex": 1,
+      "targetWord": "قَلَمٌ",
+      "correctAnswer": {
+        "id": "ism",
+        "label": "اسم"
+      },
+      "wrongAnswers": [
+        {
+          "id": "harf",
+          "label": "حرف",
+          "misconception": "ظنَّ أنَّ كلَّ نكرةٍ قصيرةٍ قد تكون حرفًا.",
+          "nudge": "انظر إلى آخر الكلمة: أليست منوَّنةً؟ 🤔 والتنوينُ أخصُّ علامات الاسم."
+        }
+      ],
+      "grammarTopic": "ism",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "قَلَمٌ: اسمٌ؛ لأنَّه منوَّنٌ، والتنوينُ لا يلحق إلّا الأسماء.",
+      "xp": 10,
+      "tags": [
+        "ism"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_007",
+      "kind": "irab",
+      "sentence": "سَيُسَافِرُ الطَّالِبُ غَدًا",
+      "targetWordIndex": 0,
+      "targetWord": "سَيُسَافِرُ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "لم يفطن إلى أنَّ السين هنا حرفٌ زائدٌ لا جزءٌ من اسم.",
+          "nudge": "السينُ تدخل على الفعل المضارع فتفيد الاستقبال 😉 فهل تدخل على الاسم؟"
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "سَيُسَافِرُ: فعلٌ مضارعٌ؛ لأنَّه قَبِلَ دخولَ السين الدالّة على الاستقبال، وهذه علامةُ الفعل.",
+      "xp": 12,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_008",
+      "kind": "irab",
+      "sentence": "قَرَأَتِ الْفَتَاةُ الْقِصَّةَ",
+      "targetWordIndex": 0,
+      "targetWord": "قَرَأَتِ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "harf",
+          "label": "حرف",
+          "misconception": "ظنَّ أنَّ التاء في آخرها تجعلها كلمةً غامضةً فأعربها حرفًا.",
+          "nudge": "هل تدلّ «قَرَأَتِ» على حدثٍ حصَل، أم هي أداةٌ لا معنى لها وحدَها؟ 🤔"
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "قَرَأَتِ: فعلٌ ماضٍ؛ اتّصلت به تاءُ التأنيث الساكنة، وهي من علامات الفعل الماضي.",
+      "xp": 12,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_009",
+      "kind": "irab",
+      "sentence": "لَنْ يُهْمِلَ الْمُجْتَهِدُ وَاجِبَهُ",
+      "targetWordIndex": 0,
+      "targetWord": "لَنْ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "ظنَّها فعلًا لأنَّها لصقت بفعلٍ مضارعٍ بعدها.",
+          "nudge": "هل تدلّ «لَنْ» وحدَها على حدثٍ في زمن؟ 😉 الحرفُ معناه لا يتمّ إلّا مع غيره."
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "لَنْ: حرفُ نفيٍ ونصبٍ؛ لا يقبل شيئًا من علامات الاسم أو الفعل، ومعناه متعلّقٌ بما بعده.",
+      "xp": 14,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_010",
+      "kind": "irab",
+      "sentence": "الْأَمَانَةُ خُلُقٌ كَرِيمٌ",
+      "targetWordIndex": 0,
+      "targetWord": "الْأَمَانَةُ",
+      "correctAnswer": {
+        "id": "ism",
+        "label": "اسم"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "ظنَّ أنَّ ما أُخبِر عنه فعلٌ لأنَّه بداية الكلام.",
+          "nudge": "هل قَبِلَت «الْأَمَانَةُ» أل التعريفَ، وأُخبِر عنها بما بعدها؟ 🤔 هذا شأنُ الاسم لا الفعل."
+        }
+      ],
+      "grammarTopic": "ism",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الْأَمَانَةُ: اسمٌ؛ لأنَّه قَبِلَ «أل» التعريفَ، وأُسنِد إليه الخبرُ بعده.",
+      "xp": 10,
+      "tags": [
+        "ism"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_011",
+      "kind": "irab",
+      "sentence": "لَمْ يَحْضُرْ خَالِدٌ",
+      "targetWordIndex": 0,
+      "targetWord": "لَمْ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "ظنَّ أنَّ كلَّ ما يسبق فعلًا مباشرةً فعلٌ مثله.",
+          "nudge": "هل تُسنَد «لَمْ» إلى فاعلٍ، أم تدخل على الفعل فتجزمه فحسب؟ 😉"
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "لَمْ: حرفُ نفيٍ وجزمٍ؛ لا يُسنَد إليه، وإنّما يدخل على الفعل المضارع فيقلب زمنَه إلى المضيّ وينصب... بل يجزمه.",
+      "xp": 14,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_012",
+      "kind": "irab",
+      "sentence": "اجْتَهِدْ فِي دُرُوسِكَ",
+      "targetWordIndex": 0,
+      "targetWord": "اجْتَهِدْ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "harf",
+          "label": "حرف",
+          "misconception": "ظنَّه أمرًا لا معنى مستقلًّا له فأعربه حرفًا.",
+          "nudge": "هل يصحّ أن تقول للمخاطَبة: «اجْتَهِدِي»؟ 😉 قبولُ ياء المخاطَبة علامةُ الفعل."
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "اجْتَهِدْ: فعلُ أمرٍ؛ يقبل اتّصالَ ياء المخاطَبة به، وهذه علامةُ الفعل لا الحرف.",
+      "xp": 12,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_013",
+      "kind": "irab",
+      "sentence": "هَلْ حَضَرَ الضَّيْفُ",
+      "targetWordIndex": 0,
+      "targetWord": "هَلْ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "ظنَّ أنَّ ما يبدأ به السؤالُ اسمٌ استفهامٍ دومًا.",
+          "nudge": "هل لِـ«هَلْ» معنًى في ذاتها أم هي أداةٌ تجلب سؤالًا لما بعدها؟ 🤔"
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "هَلْ: حرفُ استفهامٍ؛ لا يقبل التنوينَ ولا الإسنادَ، ومعناه لا يتمّ إلّا بجملةٍ بعده.",
+      "xp": 12,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_014",
+      "kind": "irab",
+      "sentence": "سَوْفَ يَفْهَمُ التِّلْمِيذُ الدَّرْسَ",
+      "targetWordIndex": 0,
+      "targetWord": "سَوْفَ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "خلَط بينها وبين الفعل الذي تدخل عليه لقربها منه.",
+          "nudge": "«سَوْفَ» لا تقبل تاءَ الفاعل ولا تُسنَد إلى شيء 😉 وإنّما تهيّئ الفعل بعدها للاستقبال."
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "سَوْفَ: حرفٌ يفيد الاستقبال؛ يدخل على الفعل المضارع فحسب، ولا يقبل أيَّ علامةٍ من علامات الاسم أو الفعل.",
+      "xp": 14,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_015",
+      "kind": "irab",
+      "sentence": "كِتَابُ الْعِلْمِ نُورٌ",
+      "targetWordIndex": 0,
+      "targetWord": "كِتَابُ",
+      "correctAnswer": {
+        "id": "ism",
+        "label": "اسم"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "لم ينتبه إلى أنَّها مضافةٌ، والإضافةُ من خصائص الأسماء.",
+          "nudge": "هل تصحّ إضافةُ «كِتَابُ» إلى ما بعدها؟ 😉 والإضافةُ لا تكون إلّا بين اسمين."
+        }
+      ],
+      "grammarTopic": "ism",
+      "level": 1,
+      "difficulty": 2,
+      "explanation": "كِتَابُ: اسمٌ؛ وهو مضافٌ، والإضافةُ خاصّةٌ بالأسماء دون الأفعال والحروف.",
+      "xp": 12,
+      "tags": [
+        "ism"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_016",
+      "kind": "irab",
+      "sentence": "عَادَ الْمُسَافِرُ سَالِمًا",
+      "targetWordIndex": 0,
+      "targetWord": "عَادَ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "ظنَّ أنَّ كلَّ كلمةٍ أُسنِد إليها فعلٌ فهي اسمٌ مثل الذي بعدها.",
+          "nudge": "هل يصحّ أن تقول «عُدْتُ»؟ 🤔 اتّصالُ تاء الفاعل به علامةُ الفعل الماضي."
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "عَادَ: فعلٌ ماضٍ؛ يقبل اتّصالَ تاء الفاعل، وفاعلُه «الْمُسَافِرُ».",
+      "xp": 10,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_017",
+      "kind": "irab",
+      "sentence": "بَلِ الْحَقُّ أَبْلَجُ",
+      "targetWordIndex": 0,
+      "targetWord": "بَلِ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "حسِبها اسمًا لأنَّها في صدر الجملة.",
+          "nudge": "هل لها معنًى في ذاتها أم تفيد الإضرابَ عن كلامٍ سابق؟ 😉 هذا معنى الحرف لا الاسم."
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 3,
+      "explanation": "بَلِ: حرفُ إضرابٍ؛ لا يقبل علاماتِ الاسم، ومعناه العدولُ عمّا قبله إلى ما بعده.",
+      "xp": 14,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_018",
+      "kind": "irab",
+      "sentence": "يَتَعَلَّمُ الطُّلَّابُ النَّحْوَ",
+      "targetWordIndex": 0,
+      "targetWord": "يَتَعَلَّمُ",
+      "correctAnswer": {
+        "id": "fil",
+        "label": "فعل"
+      },
+      "wrongAnswers": [
+        {
+          "id": "harf",
+          "label": "حرف",
+          "misconception": "ظنَّه أداةً مساعدةً لا كلمةً تامّةَ المعنى.",
+          "nudge": "هل تقبل «يَتَعَلَّمُ» دخولَ «لَنْ» عليها فتصير «لَنْ يَتَعَلَّمَ»؟ 🤔 وهذا لا يكون إلّا مع الفعل."
+        }
+      ],
+      "grammarTopic": "fil",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "يَتَعَلَّمُ: فعلٌ مضارعٌ؛ يقبل دخولَ أدوات النصب والجزم عليه، وهذه من علامات الفعل.",
+      "xp": 10,
+      "tags": [
+        "fil"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_019",
+      "kind": "irab",
+      "sentence": "إِنَّ الْعِلْمَ نَافِعٌ",
+      "targetWordIndex": 0,
+      "targetWord": "إِنَّ",
+      "correctAnswer": {
+        "id": "harf",
+        "label": "حرف"
+      },
+      "wrongAnswers": [
+        {
+          "id": "ism",
+          "label": "اسم",
+          "misconception": "ظنَّ أنَّها اسمٌ لأنَّها تنصب ما بعدها كالفعل.",
+          "nudge": "هل تُسنَد «إِنَّ» إلى فاعلٍ، أم تدخل على المبتدأ والخبر فتغيّر إعرابهما؟ 😉"
+        }
+      ],
+      "grammarTopic": "harf",
+      "level": 1,
+      "difficulty": 4,
+      "explanation": "إِنَّ: حرفُ توكيدٍ ونصبٍ؛ يدخل على الجملة الاسميّة فينصب اسمَها ويرفع خبرَها، ولا يُسنَد إلى شيء.",
+      "xp": 16,
+      "tags": [
+        "harf"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "q_l1_pos_020",
+      "kind": "irab",
+      "sentence": "الصَّادِقُ مَحْبُوبٌ بَيْنَ النَّاسِ",
+      "targetWordIndex": 0,
+      "targetWord": "الصَّادِقُ",
+      "correctAnswer": {
+        "id": "ism",
+        "label": "اسم"
+      },
+      "wrongAnswers": [
+        {
+          "id": "fil",
+          "label": "فعل",
+          "misconception": "ظنَّ أنَّ أوّلَ الجملة فعلٌ دائمًا.",
+          "nudge": "هل قَبِلَ «الصَّادِقُ» أل التعريفَ، وجاء بعده خبرٌ يُخبِر عنه؟ 🤔"
+        }
+      ],
+      "grammarTopic": "ism",
+      "level": 1,
+      "difficulty": 1,
+      "explanation": "الصَّادِقُ: اسمٌ مرفوعٌ مبتدأٌ؛ قَبِلَ «أل» وأُخبِر عنه بـ«مَحْبُوبٌ».",
+      "xp": 10,
+      "tags": [
+        "ism"
+      ],
+      "sourceType": "original",
+      "presentationHints": [
+        "wooden_board",
+        "stone_gate"
+      ],
+      "reviewStatus": "approved"
+    }
+  ]
+}
